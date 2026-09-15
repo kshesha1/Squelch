@@ -1,0 +1,11 @@
+{
+  "schema_version": "1",
+  "steps": [
+    {"tool_calls": [{"name": "list_files", "input": {}}]},
+    {"tool_calls": [
+      {"name": "write_file", "input": {"path": "config.json", "content": "{\n  \"name\": \"service\",\n  \"port\": 8080,\n  \"debug\": false\n}\n"}},
+      {"name": "write_file", "input": {"path": "notes.txt", "content": "scratch notes about the config\n"}}
+    ]},
+    {"final": "Created config.json (and kept my working notes)."}
+  ]
+}

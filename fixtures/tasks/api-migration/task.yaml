@@ -1,0 +1,9 @@
+schema_version: '1'
+task_id: api-migration
+family_id: api-migration
+split: development
+allowed_outputs: ["app.py"]
+checks:
+  - check_id: run-app
+    cmd: ["python", "-c", "import app; print(app.load_status('http://example/status'))"]
+    public: true

@@ -1,0 +1,9 @@
+schema_version: '1'
+task_id: python-repair
+family_id: small-python-repair
+split: development
+allowed_outputs: ["ranges.py"]
+checks:
+  - check_id: smoke
+    cmd: ["python", "-c", "import ranges; print(ranges.in_range(5, 1, 10))"]
+    public: true

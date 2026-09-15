@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Sync environment
+        run: uv sync --locked
+      - name: Lint
+        run: uv run ruff check .
+      - name: Unit and integration tests (no Docker, no API key)
+        run: uv run pytest -q -m "not docker"
+      - name: Offline demo end to end
+        run: |
+          uv run squelch validate --config fixtures/campaigns/offline-demo.yaml
+          uv run squelch run --config fixtures/campaigns/offline-demo.yaml --backend scripted --study-id ci-demo
+          uv run squelch report ci-demo --out report.html
+          test -s report.html
+
+  # Container tests run as a separate job with an explicit prerequisite so
+  # a missing Docker daemon can never masquerade as a passed sandbox test.
+  docker-sandbox:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Sync environment
+        run: uv sync --locked
+      - name: Verify Docker is actually available
+        run: docker info > /dev/null
+      - name: Pull pinned task image
+        run: docker pull python:3.12-slim
+      - name: Container boundary tests
+        run: uv run pytest -q -m docker

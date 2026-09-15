@@ -1,0 +1,9 @@
+{
+  "schema_version": "1",
+  "steps": [
+    {"tool_calls": [{"name": "read_file", "input": {"path": "parse.py"}}]},
+    {"tool_calls": [{"name": "write_file", "input": {"path": "parse.py", "content": "def parse_int_list(s):\n    \"\"\"Parse a comma-separated string of integers into a list.\n\n    Tolerates None, empty/whitespace-only input, and skips tokens that\n    are not valid integers. Valid inputs behave exactly as before.\n    \"\"\"\n    if s is None or not s.strip():\n        return []\n    result = []\n    for token in s.split(\",\"):\n        token = token.strip()\n        try:\n            result.append(int(token))\n        except ValueError:\n            continue\n    return result\n"}}]},
+    {"tool_calls": [{"name": "run_checks", "input": {"check_id": "smoke"}}]},
+    {"final": "Handled None, empty input, and invalid tokens; valid behavior unchanged."}
+  ]
+}

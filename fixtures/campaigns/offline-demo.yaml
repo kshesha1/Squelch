@@ -1,0 +1,25 @@
+# Offline scripted demo: validates the harness end to end with no API key
+# and no network. Scripted evidence validates the program, never a model.
+schema_version: '1'
+name: offline-demo
+backend: scripted
+scripted_transcripts: scripted/offline-demo
+skills_root: ../skills
+graders_root: ../graders
+model:
+  max_output_tokens: 2048
+runner:
+  loading: forced
+  max_model_calls: 12
+  max_tool_calls: 30
+  task_timeout_seconds: 180
+dataset:
+  manifest: ../tasks/development.yaml
+  split: development
+conditions:
+  - {id: none, skills: [], policy: shared}
+  - {id: skill, skills: [minimal-change], policy: shared}
+repetitions: 1
+schedule_seed: 42
+analysis:
+  stage: scripted

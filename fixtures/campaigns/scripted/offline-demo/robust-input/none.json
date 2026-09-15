@@ -1,0 +1,8 @@
+{
+  "schema_version": "1",
+  "steps": [
+    {"tool_calls": [{"name": "read_file", "input": {"path": "parse.py"}}]},
+    {"tool_calls": [{"name": "write_file", "input": {"path": "parse.py", "content": "def parse_int_list(s):\n    \"\"\"Parse a comma-separated string of integers into a list.\"\"\"\n    if not s:\n        return []\n    return [int(token.strip()) for token in s.split(\",\")]\n"}}]},
+    {"final": "Handled empty input."}
+  ]
+}

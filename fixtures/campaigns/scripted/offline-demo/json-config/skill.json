@@ -1,0 +1,10 @@
+{
+  "schema_version": "1",
+  "steps": [
+    {"tool_calls": [{"name": "list_files", "input": {}}]},
+    {"tool_calls": [{"name": "read_file", "input": {"path": "README.txt"}}]},
+    {"tool_calls": [{"name": "write_file", "input": {"path": "config.json", "content": "{\n  \"name\": \"service\",\n  \"port\": 8080,\n  \"debug\": false\n}\n"}}]},
+    {"tool_calls": [{"name": "run_checks", "input": {"check_id": "json-parse"}}]},
+    {"final": "Created config.json only; no unrelated files."}
+  ]
+}
