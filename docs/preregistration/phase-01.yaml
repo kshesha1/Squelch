@@ -31,5 +31,5 @@ fixture_provenance: >-
   All skills and tasks are authored controls; modernize-thoroughly +
   minimal-change is a deliberately constructed conflict pair (P1.6) and
   is labeled constructed in every output.
-commit_hash: 'set-at-commit-time'
+commit_hash: '3df7125'
 created_utc: '2026-09-16T00:00:00Z'
