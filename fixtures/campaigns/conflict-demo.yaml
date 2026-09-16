@@ -1,0 +1,30 @@
+# Offline four-condition conflict demo (scripted).
+# Validates the none/A/B/A+B machinery and interaction analysis with
+# deterministic transcripts. The "degradation" here is scripted by
+# construction — it proves the pipeline can measure a conflict, not that
+# one exists. The live version is conflict-pilot.yaml.
+schema_version: '1'
+name: conflict-demo
+backend: scripted
+scripted_transcripts: scripted/conflict-demo
+skills_root: ../skills
+graders_root: ../graders
+model:
+  max_output_tokens: 2048
+runner:
+  loading: forced
+  max_model_calls: 12
+  max_tool_calls: 30
+  task_timeout_seconds: 180
+dataset:
+  manifest: ../tasks/conflict-demo.yaml
+  split: development
+conditions:
+  - {id: none, skills: [], policy: shared}
+  - {id: a, skills: [modernize-thoroughly], policy: shared}
+  - {id: b, skills: [minimal-change], policy: shared}
+  - {id: ab, skills: [modernize-thoroughly, minimal-change], policy: shared}
+repetitions: 1
+schedule_seed: 7
+analysis:
+  stage: scripted

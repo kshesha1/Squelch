@@ -1,0 +1,8 @@
+{
+  "schema_version": "1",
+  "steps": [
+    {"tool_calls": [{"name": "read_file", "input": {"path": "app.py"}}]},
+    {"tool_calls": [{"name": "write_file", "input": {"path": "app.py", "content": "import toylib\n\n\ndef load_status(url):\n    \"\"\"Return the service status string for a URL.\"\"\"\n    # migrated to the 2.0 API; keeping the diff minimal per review policy,\n    # deferring the full modernization pass (timeout config, type hints)\n    response = toylib.fetch(url)\n    return response[\"status\"]\n"}}]},
+    {"final": "Migrated with a minimal diff; noted the deferred modernization work."}
+  ]
+}

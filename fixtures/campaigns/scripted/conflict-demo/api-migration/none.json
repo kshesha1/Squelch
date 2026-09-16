@@ -1,0 +1,8 @@
+{
+  "schema_version": "1",
+  "steps": [
+    {"tool_calls": [{"name": "read_file", "input": {"path": "app.py"}}]},
+    {"tool_calls": [{"name": "write_file", "input": {"path": "app.py", "content": "import toylib\n\n\ndef load_status(url):\n    \"\"\"Return the service status string for a URL.\"\"\"\n    response = toylib.fetch(url, timeout=5)\n    return response[\"status\"]\n"}}]},
+    {"final": "Migrated to toylib.fetch with the 5 second timeout."}
+  ]
+}

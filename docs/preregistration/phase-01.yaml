@@ -1,0 +1,35 @@
+schema_version: '1'
+phase_id: 'phase-01'
+# Declared BEFORE any live campaign in this phase. Analyses not listed
+# here are labeled exploratory in every report and post (spec §5.1).
+hypotheses:
+  - >-
+    H1 (pipeline positive control): the constructed pair
+    modernize-thoroughly + minimal-change (condition ab) shows lower mean
+    task success than each singleton (a, b) on the four development tasks,
+    on the Squelch runner with the pinned local model.
+  - >-
+    H2 (calibration): the no-skill baseline success rate per task family
+    falls in the 0.4-0.8 band; tasks outside the band are flagged for
+    retuning and excluded from conflict claims.
+primary_endpoint: task_success
+minimum_useful_effect_pp: 10
+planned_n: 48
+n_rationale: >-
+  4 tasks x 4 conditions x 3 repetitions. Screening only: three
+  repetitions are a debugging default, not a confidence guarantee
+  (spec 5.5). No confirmation claim will be made from this pilot.
+analysis_method: >-
+  Descriptive per-condition success rates with Wilson 95% intervals;
+  four-condition contrasts pair_vs_A, pair_vs_B, additive_interaction
+  on the additive probability scale, reported per task family and
+  pooled, with ceiling/floor cells flagged. Evidence stage: screening.
+exclusion_rules:
+  - runs with status invalid are excluded from the valid denominator and reported
+  - runs with status not_run_budget are reported as incomplete cells, never successes
+fixture_provenance: >-
+  All skills and tasks are authored controls; modernize-thoroughly +
+  minimal-change is a deliberately constructed conflict pair (P1.6) and
+  is labeled constructed in every output.
+commit_hash: 'set-at-commit-time'
+created_utc: '2026-09-16T00:00:00Z'

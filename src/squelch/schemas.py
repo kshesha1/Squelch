@@ -221,6 +221,9 @@ class RunResult(VersionedRecord):
     trace_path: str | None = None
     termination_reason: TerminationReason | None = None
     stage_results: list[StageResult] = Field(default_factory=list)
+    # workspace file changes relative to the starter tree, as "A path" /
+    # "M path" / "D path" lines; full diffs live in the diff.patch artifact
+    changed_files: list[str] = Field(default_factory=list)
     error: str | None = None
     started_at: datetime | None = None
     finished_at: datetime | None = None

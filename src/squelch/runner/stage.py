@@ -14,6 +14,7 @@ planning fails instead (enforced at prompt-assembly time here).
 
 from __future__ import annotations
 
+import difflib
 import shutil
 import time
 from dataclasses import dataclass
@@ -71,6 +72,53 @@ def assemble_system_prompt(stage: StageSpec, skills: dict[str, SkillPackage]) ->
             f"{MAX_SYSTEM_PROMPT_CHARS}; never truncate a skill silently"
         )
     return prompt
+
+
+_DIFF_MAX_BYTES = 262_144
+
+
+def compute_workspace_diff(starter: Path, workspace: Path) -> tuple[list[str], str]:
+    """Compare the final workspace to the starter tree.
+
+    Returns ("A|M|D path" lines, unified diff text). Binary or oversized
+    files are noted, not diffed.
+    """
+    def tree(root: Path) -> dict[str, Path]:
+        return {p.relative_to(root).as_posix(): p for p in root.rglob("*") if p.is_file()}
+
+    before, after = tree(starter), tree(workspace)
+    changes: list[str] = []
+    patches: list[str] = []
+    for rel in sorted(before.keys() | after.keys()):
+        old, new = before.get(rel), after.get(rel)
+        if old is not None and new is not None and old.read_bytes() == new.read_bytes():
+            continue
+        status = "A" if old is None else ("D" if new is None else "M")
+        changes.append(f"{status} {rel}")
+
+        def lines(p: Path | None) -> list[str] | None:
+            if p is None:
+                return []
+            if p.stat().st_size > _DIFF_MAX_BYTES:
+                return None
+            try:
+                return p.read_text(encoding="utf-8").splitlines(keepends=True)
+            except UnicodeDecodeError:
+                return None
+
+        old_lines, new_lines = lines(old), lines(new)
+        if old_lines is None or new_lines is None:
+            patches.append(f"# {status} {rel}: binary or oversized, not diffed\n")
+        else:
+            patches.append(
+                "".join(
+                    difflib.unified_diff(
+                        old_lines, new_lines,
+                        fromfile=f"starter/{rel}", tofile=f"workspace/{rel}",
+                    )
+                )
+            )
+    return changes, "".join(patches)
 
 
 @dataclass
@@ -256,11 +304,14 @@ class StageScheduler:
                     )
             if limit_hit:
                 break
+            name_by_id = {c.tool_call_id: c.name for c in response.tool_calls}
             messages.append(
                 {
                     "role": "tool",
                     "content": [
-                        {"tool_call_id": r.tool_call_id, "output": r.output,
+                        {"tool_call_id": r.tool_call_id,
+                         "name": name_by_id.get(r.tool_call_id, ""),
+                         "output": r.output,
                          "is_error": r.is_error}
                         for r in tool_results
                     ],
@@ -373,6 +424,9 @@ def execute_run(
             finished_at=utc_now(),
         )
 
+    changed_files, patch_text = compute_workspace_diff(starter_dir, workspace)
+    (run_dir / "diff.patch").write_text(patch_text, encoding="utf-8")
+
     success = task_success(assertions)
     if termination is not TerminationReason.FINAL_RESPONSE:
         status = RunStatus.AGENT_LIMIT
@@ -393,12 +447,18 @@ def execute_run(
         task_success=success,
         assertions=assertions,
         usage=usage,
-        spend_status="free_scripted" if backend.name == "scripted" else "cost_unknown",
+        spend_usd=0.0 if backend.name in ("scripted", "ollama") else None,
+        spend_status={
+            "scripted": "free_scripted",
+            "ollama": "free_local",
+        }.get(backend.name, "cost_unknown"),
         artifact_hashes={
             "final_workspace": hash_tree(workspace),
             "evaluated_outputs": evaluated_hash,
             "run_spec": hash_json(spec.model_dump(mode="json")),
+            "diff_patch": hash_text(patch_text),
         },
+        changed_files=changed_files,
         trace_path=str(run_dir / "events.jsonl"),
         termination_reason=termination,
         stage_results=stage_results,

@@ -32,7 +32,9 @@ def version() -> None:
 
 @app.command()
 def doctor() -> None:
-    """Check the local environment: Python, Docker, results directory."""
+    """Check the local environment: Python, Docker, Ollama, results directory."""
+    from squelch.backends.ollama import DEFAULT_HOST, OllamaBackend
+    from squelch.backends.protocol import BackendError
     from squelch.sandbox.envs import DockerEnv
 
     typer.echo(f"squelch {__version__}")
@@ -44,9 +46,16 @@ def doctor() -> None:
         typer.echo("docker: CLI found but daemon unreachable — container runs unavailable")
     else:
         typer.echo("docker: not found — only the local (non-isolating) environment is usable")
+    try:
+        v = OllamaBackend("probe").server_version()
+        typer.echo(f"ollama: server {v} reachable at {DEFAULT_HOST} (live local runs usable)")
+    except BackendError:
+        typer.echo(
+            f"ollama: not reachable at {DEFAULT_HOST} — install ollama and run "
+            "`ollama serve` (plus `ollama pull <model>`) for live local runs"
+        )
     typer.echo(f"results root: {RESULTS_ROOT.resolve()} "
                f"({'exists' if RESULTS_ROOT.exists() else 'will be created on first run'})")
-    typer.echo("live backends: not yet implemented (ticket P1.4); scripted runs are free")
 
 
 @app.command()
@@ -78,6 +87,66 @@ def validate(
                f"{len(cfg.conditions) * len(fixtures) * cfg.repetitions} planned runs")
     typer.echo(f"skills available: {sorted(skills)}")
     typer.echo(f"config hash: {cfg.config_hash}")
+    if cfg.preregistration_hash:
+        typer.echo(f"preregistration hash: {cfg.preregistration_hash}")
+
+
+@app.command()
+def plan(
+    config: Path = typer.Option(..., "--config", exists=True, dir_okay=False),
+) -> None:
+    """Print the run plan and token envelope. Never contacts a model."""
+    from squelch.experiments.campaign import CampaignConfigError, load_campaign, plan_text
+    from squelch.experiments.tasks import load_task_manifest
+
+    try:
+        cfg = load_campaign(config)
+        fixtures = load_task_manifest(
+            cfg.dataset_manifest, cfg.graders_root, environment_image="plan"
+        )
+    except (CampaignConfigError, FileNotFoundError, KeyError) as exc:
+        typer.echo(f"invalid: {exc}", err=True)
+        raise typer.Exit(EXIT_INVALID) from exc
+    typer.echo(plan_text(cfg, fixtures))
+
+
+@app.command()
+def prereg(
+    phase: int = typer.Option(..., "--phase"),
+    out: Path = typer.Option(..., "--out"),
+) -> None:
+    """Write a preregistration template. Fill it in and commit BEFORE live runs."""
+    import subprocess
+
+    try:
+        commit = subprocess.run(
+            ["git", "rev-parse", "HEAD"], capture_output=True, text=True, timeout=10
+        ).stdout.strip() or "UNCOMMITTED"
+    except (OSError, subprocess.TimeoutExpired):
+        commit = "UNKNOWN"
+    template = f"""schema_version: '1'
+phase_id: 'phase-{phase:02d}'
+# Declared BEFORE any live campaign in this phase. Analyses not listed
+# here are labeled exploratory in every report and post (spec §5.1).
+hypotheses:
+  - 'FILL IN: e.g. skill X raises task success on family Y vs no-skill baseline'
+primary_endpoint: task_success
+minimum_useful_effect_pp: 10
+planned_n: 24
+n_rationale: 'FILL IN: e.g. 4 tasks x 2 conditions x 3 repetitions; screening only'
+analysis_method: 'descriptive rates with Wilson intervals; screening stage'
+exclusion_rules:
+  - 'runs with status invalid are excluded from the valid denominator and reported'
+commit_hash: '{commit}'
+created_utc: 'FILL IN before committing'
+"""
+    out.parent.mkdir(parents=True, exist_ok=True)
+    if out.exists():
+        typer.echo(f"refusing to overwrite existing preregistration: {out}", err=True)
+        raise typer.Exit(EXIT_INVALID)
+    out.write_text(template, encoding="utf-8")
+    typer.echo(f"preregistration template written: {out}")
+    typer.echo("Fill it in, commit it, then reference it from the campaign config.")
 
 
 @app.command()
@@ -85,8 +154,11 @@ def run(
     config: Path = typer.Option(..., "--config", exists=True, dir_okay=False),
     backend: str = typer.Option("scripted", "--backend"),
     study_id: str | None = typer.Option(None, "--study-id"),
+    resume: bool = typer.Option(False, "--resume",
+                                help="Reuse completed identical planned runs."),
 ) -> None:
-    """Execute a campaign. Phase 1: scripted backend only, always free."""
+    """Execute a campaign. Backends: scripted (free), ollama (local inference)."""
+    from squelch.backends.protocol import BackendError
     from squelch.experiments.campaign import CampaignConfigError, load_campaign, run_campaign
 
     try:
@@ -96,8 +168,8 @@ def run(
                 f"--backend {backend!r} does not match campaign backend {cfg.backend!r}"
             )
         sid, results = run_campaign(cfg, results_root=RESULTS_ROOT / "studies",
-                                    study_id=study_id)
-    except CampaignConfigError as exc:
+                                    study_id=study_id, resume=resume)
+    except (CampaignConfigError, BackendError) as exc:
         typer.echo(f"invalid: {exc}", err=True)
         raise typer.Exit(EXIT_INVALID) from exc
     statuses: dict[str, int] = {}
@@ -108,6 +180,9 @@ def run(
     typer.echo(f"artifacts: {RESULTS_ROOT / 'studies' / sid}")
     if statuses.get("invalid"):
         raise typer.Exit(EXIT_INVALID)
+    if statuses.get("not_run_budget"):
+        typer.echo("note: some runs were not started (token budget); "
+                   "the study is incomplete, never 'successful by omission'")
 
 
 @app.command()

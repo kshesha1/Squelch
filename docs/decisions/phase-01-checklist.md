@@ -47,26 +47,51 @@ Status as of 2026-09-15. Ticket IDs reference spec.md §6.
 - [x] JSONL event log with stage_id, sequence, termination classification
 - [x] Scripted two-stage run through the scheduler (test)
 
-## Remaining before P1.4 is complete
+## P1.4 Live backend — DONE, with an operator-approved deviation
 
-- [ ] Anthropic backend behind the protocol (verify official tool-use docs [S3]
-      first; record model ID + SDK version)
-- [ ] Per-request event capture of redacted provider request/response bodies
-- [ ] Wall-clock timeout enforced around live requests (current timeout check is
-      between-call, sufficient for scripted runs only)
+**Deviation from spec §3.1:** the operator chose a local Ollama backend
+instead of the Anthropic API (no API key, no cloud spend). The backend
+protocol is unchanged; an Anthropic backend can be added later behind the
+same interface. Recorded 2026-09-16.
 
-## Remaining for P1.5
+- [x] Ollama backend behind the backend protocol; official /api/chat
+      tool-use format verified against docs before implementation
+- [x] Model ID pinned explicitly in campaign config (never `latest` silently);
+      reported model identity recorded per response
+- [x] Termination classification and per-call usage capture (prompt_eval_count /
+      eval_count)
+- [x] Server reachability smoke check before any live dispatch; `doctor` reports
+      ollama status
+- [ ] Wall-clock timeout is checked between model calls; a single hung request
+      is bounded by the HTTP client timeout (600s), not preempted mid-request
 
-- [ ] Budget ledger: price table, per-request reservation, stop-when-insufficient,
-      `not_run_budget` status
-- [ ] Crash-safe persistence and `--resume` (reuse identical planned run IDs only)
-- [ ] Preregistration file + hash binding into comparisons
-- [ ] `squelch plan` (never contacts a model)
+## P1.5 Campaign planner — DONE for the local-inference model
 
-## Remaining for P1.6–P1.7
+- [x] Token-budget ledger: cumulative caps, `not_run_budget` persisted for
+      unstarted runs, incomplete studies flagged (USD price table is N/A for
+      local inference; spend recorded as $0 with `free_local` status)
+- [x] Crash-safe persistence and `--resume`: completed identical planned run IDs
+      reused, corrupt artifacts re-run, changed configs refused
+- [x] Preregistration file + hash binding: live campaigns refuse to run without
+      one; hash recorded in study summary and report
+- [x] `squelch plan` (never contacts a model)
 
-- [ ] Constructed conflict skill pair + four-condition grid; exit requirement:
-      reproducible degradation vs. both singletons
-- [ ] Full comparison report: side-by-side conditions, assertions, usage, file
-      diff, ordered events (current report is a study summary table)
-- [ ] A/A subset; per-run cost measurement; §4.5 budget table update
+## P1.6 Constructed conflict — machinery DONE; live exit criterion pending
+
+- [x] Constructed pair: `modernize-thoroughly` (broad edits) vs `minimal-change`
+      (minimal diffs, no new files); documented as constructed
+- [x] Four-condition grid (none/a/b/ab) with interaction contrasts + Wilson
+      intervals; scripted demo shows the full pattern offline
+- [ ] **Exit requirement (live): the pair shows reproducible degradation vs.
+      both singletons across repetitions on the live model, or the fixture is
+      redesigned.** Run `conflict-pilot.yaml` once Ollama + qwen3:8b are ready.
+- [ ] Baseline difficulty calibration (0.4–0.8 band) — measured by the same
+      pilot's `none` condition
+
+## P1.7 Report — DONE
+
+- [x] Conditions side by side with skills, assertion results, usage, file
+      changes (A/M/D + diff.patch artifact), per-run table, event trace paths
+- [x] Four-condition interaction analysis with intervals and ceiling/floor
+      caveats displayed inline
+- [x] Preregistration hash, token totals, spend, reused-run count disclosed

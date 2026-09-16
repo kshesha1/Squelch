@@ -1,0 +1,37 @@
+# Live four-condition conflict pilot on local Ollama inference (P1.6).
+# 4 tasks x 4 conditions x 3 repetitions = 48 runs, $0 marginal cost.
+# The model tag is pinned explicitly; never resolve `latest` silently.
+# Requires: `ollama serve` running and `ollama pull qwen3:8b` done.
+schema_version: '1'
+name: conflict-pilot
+backend: ollama
+preregistration: ../../docs/preregistration/phase-01.yaml
+skills_root: ../skills
+graders_root: ../graders
+model:
+  id: qwen3:8b
+  host: http://localhost:11434
+  temperature: 0.2
+  max_output_tokens: 2048
+runner:
+  loading: forced
+  max_model_calls: 12
+  max_tool_calls: 30
+  task_timeout_seconds: 600
+dataset:
+  manifest: ../tasks/development.yaml
+  split: development
+conditions:
+  - {id: none, skills: [], policy: shared}
+  - {id: a, skills: [modernize-thoroughly], policy: shared}
+  - {id: b, skills: [minimal-change], policy: shared}
+  - {id: ab, skills: [modernize-thoroughly, minimal-change], policy: shared}
+repetitions: 3
+schedule_seed: 42
+budget:
+  max_total_input_tokens: 4000000
+  max_total_output_tokens: 800000
+analysis:
+  stage: screening
+  primary_metric: task_success
+  minimum_useful_effect_pp: 10
