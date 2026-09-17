@@ -3,62 +3,128 @@
 > In radio, the *squelch* circuit suppresses unwanted noise on a channel so
 > the signal comes through cleanly.
 
-Squelch is an open-source experimental system for evolving agent skill
-collections. It discovers when skills help, interfere, or become
-unnecessary, and tests whether changing how their instructions are applied
-— ordering, phase separation, or context isolation — improves outcomes.
+Agent skills that each work correctly alone can interfere when loaded
+together. Squelch is an open-source experimental system that measures that
+interference and tests whether rearranging how instructions are applied
+suppresses it.
 
-**Status: work in progress, Phase 1 (instrumented laboratory).**
+**Status: in progress. Phase 1 (instrumented laboratory) implemented.**
 
-## What is supported by measurement right now
+## What is supported by measurement, and what is not
 
-Nothing yet. The current codebase provides:
+The harness is built and tested. **No validated research finding exists yet.**
+Specifically:
 
-- a skill package parser with content-hashed snapshots (a reference-file
-  edit changes package identity),
-- a bounded tool-calling runner behind a stage-scheduler abstraction,
-- a constrained task sandbox contract (Docker) plus a clearly-labeled
-  local fallback for offline development,
-- a trusted evaluator that grades final artifacts in a fresh directory
-  with grader code the agent never sees,
-- a deterministic scripted backend and an offline end-to-end demo.
+- Scripted results validate the program only — never a model-performance
+  claim. They are labeled `evidence_stage: scripted` everywhere they appear.
+- Live results so far are `screening`: small N, descriptive, on one local
+  model and authored fixtures. They describe the Squelch runner, not coding
+  agents in general.
+- The constructed conflict pair has **not** been shown to degrade a live
+  model. See [docs/weekly/week-01.md](docs/weekly/week-01.md) for what was
+  measured and what failed.
 
-Scripted results validate the harness program only — they are never a
-model-performance claim. No live model results exist yet; the Anthropic
-backend and campaign planner land with tickets P1.4–P1.5.
+## What the code does
 
-## Try the offline demo (no API key, no network)
+- **Skill ingestion** with content-hashed package identity — editing a
+  referenced file changes the package hash, so a decision made about the old
+  version cannot silently apply to the new one.
+- **A bounded tool-calling runner** behind a stage-scheduler abstraction. A
+  stage plan of length *n* is the general case; Phase 1 uses n=1, and nothing
+  special-cases that.
+- **A constrained task sandbox** (Docker: no network, non-root, read-only
+  root, dropped capabilities) plus a clearly-labeled non-isolating local
+  fallback for offline development.
+- **A trusted evaluator** that grades only declared outputs in a fresh
+  directory with grader code the agent never sees.
+- **A campaign planner** with interleaved condition order, a token-budget
+  ledger, crash-safe resume, and preregistration binding.
+- **Analysis and reporting**: Wilson intervals, four-condition interaction
+  contrasts, verbosity/truncation diagnostics, and a self-contained HTML
+  report with no remote assets.
+
+## Backends
+
+| Backend | Use | Cost |
+|---|---|---|
+| `scripted` | deterministic transcripts for offline tests and CI | free |
+| `ollama` | live inference on a local model, no API key | $0 marginal |
+
+The backend protocol is provider-neutral; a hosted-API backend can be added
+behind the same interface without touching experiment code.
+
+## Try the offline demo (no API key, no network, no Docker)
 
 ```bash
 uv sync
 uv run squelch doctor
-uv run squelch validate --config fixtures/campaigns/offline-demo.yaml
-uv run squelch run --config fixtures/campaigns/offline-demo.yaml --backend scripted
-uv run squelch report <STUDY_ID> --out report.html
+uv run squelch run --config fixtures/campaigns/offline-demo.yaml --backend scripted --study-id demo
+uv run squelch report demo --out report.html
 ```
 
-The `run` command prints the study ID and where artifacts were written
-(`.squelch/studies/<study-id>/`): per-run JSONL event traces, run specs,
-results, and a study summary.
+For the four-condition machinery including the interaction analysis:
+
+```bash
+uv run squelch run --config fixtures/campaigns/conflict-demo.yaml --backend scripted --study-id conflict
+uv run squelch report conflict --out conflict.html
+```
+
+Both are scripted by construction — they prove the pipeline can register a
+difference, nothing more.
+
+## Run a live local experiment
+
+Requires [Ollama](https://ollama.com) running locally:
+
+```bash
+ollama serve                 # in another terminal
+ollama pull qwen3:8b
+uv run squelch plan --config fixtures/campaigns/conflict-pilot.yaml
+uv run squelch run --config fixtures/campaigns/conflict-pilot.yaml --backend ollama --study-id pilot
+```
+
+`plan` never contacts a model. A live campaign refuses to start without a
+preregistration file. If a run is interrupted, `--resume` reuses the
+completed runs rather than repeating them.
+
+## Reading results
+
+`.squelch/studies/<study-id>/` holds:
+
+- `study.json` — per-cell success counts, status counts, diagnostics
+- `runs/<run-id>/result.json` — one run's grade, per-assertion
+- `runs/<run-id>/events.jsonl` — ordered observable events
+- `runs/<run-id>/diff.patch` — what the agent changed
+- `runs/<run-id>/workspace/` — the final files
+
+`squelch report <study-id>` renders all of it as one HTML page.
 
 ## Naming
 
-The project, repository, import package, and CLI are all `squelch`. The
-PyPI distribution name is `squelch-skills`, because bare `squelch` is
-already taken by an unrelated SQL REPL package.
+The project, repository, import package, and CLI are all `squelch`. The PyPI
+distribution name is `squelch-skills`, because bare `squelch` is already
+taken by an unrelated SQL REPL package.
 
 ## Development
 
 ```bash
 uv sync
-uv run pytest
+uv run pytest -m "not docker"   # keyless, no network
+uv run pytest -m docker         # container boundary tests; needs a daemon
 uv run ruff check .
 ```
 
-See [spec.md](spec.md) for the full specification and
-[docs/decisions](docs/decisions) for the Phase 1 checklist.
+Container tests are a separate job: a missing Docker daemon must never
+masquerade as a passed sandbox test.
+
+## Documentation
+
+- [spec.md](spec.md) — the full specification
+- [docs/methodology.md](docs/methodology.md) — how claims are controlled
+- [docs/weekly/week-01.md](docs/weekly/week-01.md) — what was measured
+- [docs/decisions/](docs/decisions/) — implementation status and deviations
 
 ## License
 
-Apache-2.0. Third-party skill and fixture licenses are tracked separately
-and do not inherit the project license.
+Apache-2.0. Third-party skill and fixture licenses are tracked separately and
+do not inherit the project license.
