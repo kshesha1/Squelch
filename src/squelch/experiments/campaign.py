@@ -448,7 +448,7 @@ def run_campaign(
             break  # preserve partial artifacts; remaining runs stay unplanned on disk
 
     summary = summarize(config, specs, results, environment_identity, reused=reused,
-                        ledger=ledger)
+                        ledger=ledger, skills=skills)
     (study_dir / "study.json").write_text(
         json.dumps(summary, indent=2, sort_keys=True), encoding="utf-8"
     )
@@ -463,6 +463,7 @@ def summarize(
     *,
     reused: int = 0,
     ledger: _TokenLedger | None = None,
+    skills: dict[str, SkillPackage] | None = None,
 ) -> dict:
     by_id = {r.run_id: r for r in results}
     cells: dict[tuple[str, str], dict] = {}
@@ -512,6 +513,29 @@ def summarize(
             "truncated_runs": d["truncated"],
         })
 
+    # Fixture provenance must travel with the numbers (spec §11): a
+    # deliberately constructed conflict must never be mistaken for a skill
+    # found in the wild. Undeclared provenance is reported as undeclared,
+    # never imputed as benign.
+    used_skill_ids: list[str] = []
+    for cond in config.conditions:
+        for sid in cond.skill_ids:
+            if sid not in used_skill_ids:
+                used_skill_ids.append(sid)
+    fixture_provenance = []
+    for sid in sorted(used_skill_ids):
+        pkg = (skills or {}).get(sid)
+        prov = "undeclared"
+        pkg_hash = None
+        if pkg is not None:
+            prov = str(pkg.snapshot.extra_metadata.get("provenance", "undeclared"))
+            pkg_hash = pkg.snapshot.package_hash
+        fixture_provenance.append(
+            {"skill_id": sid, "provenance": prov, "package_hash": pkg_hash}
+        )
+    constructed = [f["skill_id"] for f in fixture_provenance
+                   if "constructed" in f["provenance"]]
+
     if config.backend == "scripted":
         disclosure = (
             "Scripted evidence validates the harness program only; it is never a "
@@ -544,7 +568,15 @@ def summarize(
         "generated_at": utc_now().isoformat(),
         "cells": sorted(cells.values(), key=lambda c: (c["task_id"], c["condition_id"])),
         "condition_diagnostics": diagnostics,
-        "disclosure": disclosure,
+        "fixture_provenance": fixture_provenance,
+        "constructed_fixtures": constructed,
+        "disclosure": disclosure + (
+            " CONSTRUCTED FIXTURE PRESENT: "
+            + ", ".join(constructed)
+            + " was authored to collide by design and says nothing about how "
+              "often real skills conflict."
+            if constructed else ""
+        ),
     }
 
 

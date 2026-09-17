@@ -123,6 +123,24 @@ does not establish a harmful pair; intervals are Wilson 95%.</p>
 </table>
 {% endif %}
 
+{% if study.fixture_provenance %}
+<h2>Fixture provenance</h2>
+<p class="meta">Where each exposed skill came from. A constructed fixture was
+authored to collide by design; it validates the instrument and says nothing about
+how often skills conflict in practice. Provenance is read from the package, never
+inferred — <code>undeclared</code> means the package did not state it.</p>
+<table>
+<tr><th>Skill</th><th>Provenance</th><th>Package hash</th></tr>
+{% for f in study.fixture_provenance %}
+<tr>
+  <td>{{ f.skill_id }}</td>
+  <td class="{{ 'fail' if 'constructed' in f.provenance else '' }}">{{ f.provenance }}</td>
+  <td class="small"><code>{{ f.package_hash or 'unknown' }}</code></td>
+</tr>
+{% endfor %}
+</table>
+{% endif %}
+
 {% if study.condition_diagnostics %}
 <h2>Condition diagnostics — verbosity and truncation</h2>
 <p class="meta">Loading more instructions lengthens the model's output as well as the

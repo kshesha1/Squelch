@@ -9,8 +9,11 @@ import pytest
 from squelch.experiments.campaign import (
     CampaignConfigError,
     load_campaign,
+    plan_runs,
     run_campaign,
 )
+from squelch.experiments.tasks import load_task_manifest
+from squelch.skills.loader import load_inventory
 
 FIXTURES = Path(__file__).resolve().parents[2] / "fixtures"
 CAMPAIGN = FIXTURES / "campaigns" / "offline-demo.yaml"
@@ -110,3 +113,27 @@ def test_prereg_hash_recorded_in_study(tmp_path):
     cfg = load_campaign(FIXTURES / "campaigns" / "conflict-pilot.yaml")
     assert cfg.preregistration_hash is not None
     assert cfg.preregistration_hash.startswith("sha256:")
+
+
+def test_unpriced_provider_is_marked_cost_unknown():
+    """A backend with no price table must never imply a known cost.
+
+    Spec §4.5: without valid prices a campaign cannot claim a dollar cap.
+    Local inference has a known zero marginal cost; anything else defaults to
+    cost_unknown until a price reference exists.
+    """
+    from squelch.schemas import ModelSpec
+
+    unpriced = ModelSpec(provider="some-hosted-api", requested_model_id="x")
+    assert unpriced.cost_unknown is True
+    assert unpriced.pricing_reference is None
+
+    cfg = load_campaign(FIXTURES / "campaigns" / "conflict-pilot.yaml")
+    fixtures = load_task_manifest(cfg.dataset_manifest, cfg.graders_root,
+                                  environment_image="local:test")
+    skills = load_inventory(cfg.skills_root)
+    specs = plan_runs(cfg, fixtures, skills, study_id="s", environment_identity="local:test")
+    model = specs[0].model
+    assert model.provider == "ollama"
+    assert model.cost_unknown is False
+    assert model.pricing_reference == "local_inference_zero_marginal_cost"

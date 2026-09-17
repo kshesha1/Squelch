@@ -93,3 +93,30 @@ def test_condition_diagnostics_expose_verbosity_and_truncation(study):
     html = out.read_text()
     assert "Condition diagnostics" in html
     assert "Runs truncated by output cap" in html
+
+
+def test_constructed_fixture_is_disclosed_not_imputed(study, tmp_path):
+    """A deliberately constructed conflict must be labeled wherever it appears.
+
+    Spec §11: a constructed fixture must never be mistaken for a skill found
+    in the wild, and provenance is read from the package rather than assumed.
+    """
+    root, study_id, _ = study
+    summary = json.loads((root / study_id / "study.json").read_text())
+
+    prov = {f["skill_id"]: f for f in summary["fixture_provenance"]}
+    assert set(prov) == {"minimal-change", "modernize-thoroughly"}
+    assert prov["modernize-thoroughly"]["provenance"] == "constructed-conflict-fixture"
+    assert prov["modernize-thoroughly"]["package_hash"].startswith("sha256:")
+    # Undeclared provenance is reported as such, never imputed as benign.
+    assert prov["minimal-change"]["provenance"] in (
+        "undeclared", "authored-control"
+    )
+
+    assert summary["constructed_fixtures"] == ["modernize-thoroughly"]
+    assert "CONSTRUCTED FIXTURE PRESENT" in summary["disclosure"]
+
+    out = render_study_report(root / study_id, tmp_path / "prov.html")
+    html = out.read_text()
+    assert "Fixture provenance" in html
+    assert "constructed-conflict-fixture" in html
