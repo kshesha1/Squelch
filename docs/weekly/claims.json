@@ -1,0 +1,80 @@
+{
+  "schema_version": "1",
+  "note": "Every numeric claim made publicly, mapped to the artifact that supports it. Never prewrite numbers here.",
+  "analysis_version": "replay/1",
+  "preregistration_hash": "sha256:2069c94cfda3e0e965b176fb63872db847e42b9fd55f34d1cbe2bb03ad75b775",
+  "claims": [
+    {
+      "id": "w01-pooled-rates",
+      "claim": "p(none)=0.83, p(a)=0.92, p(b)=0.92, p(ab)=0.75 pooled over 4 tasks, 12 valid runs per condition",
+      "source_study": "pilot-001-reanalyzed",
+      "artifact": ".squelch/studies/pilot-001-reanalyzed/study.json",
+      "evidence_stage": "screening",
+      "supports_conclusion": false,
+      "why": "All Wilson 95% intervals overlap; compatible with no effect."
+    },
+    {
+      "id": "w01-contrasts",
+      "claim": "pair_vs_A = -0.167, pair_vs_B = -0.167, additive_interaction = -0.250",
+      "source_study": "pilot-001-reanalyzed",
+      "artifact": ".squelch/studies/pilot-001-reanalyzed/study.json",
+      "evidence_stage": "screening",
+      "supports_conclusion": false,
+      "why": "Direction matches H1 but intervals overlap; descriptive only."
+    },
+    {
+      "id": "w01-robust-input-cell",
+      "claim": "robust-input: none 3/3, a 3/3, b 3/3, ab 0/3",
+      "source_study": "pilot-001-reanalyzed",
+      "artifact": ".squelch/studies/pilot-001-reanalyzed/study.json",
+      "evidence_stage": "screening",
+      "supports_conclusion": false,
+      "why": "Three failures had three unrelated causes (truncation, escape-sequence bug, docstring typo); n=3 interval reaches past 0.5."
+    },
+    {
+      "id": "w01-verbosity",
+      "claim": "Median output tokens: none 1533, b 1535, a 1772, ab 2188 (~43% above baseline for the pair)",
+      "source_study": "pilot-001-reanalyzed",
+      "artifact": ".squelch/studies/pilot-001-reanalyzed/study.json#condition_diagnostics",
+      "evidence_stage": "screening",
+      "supports_conclusion": "confound_only",
+      "why": "Establishes that length and content vary together; does not establish an instruction effect."
+    },
+    {
+      "id": "w01-reclassification",
+      "claim": "2 of 48 runs reclassified from completed/final_response to agent_limit/output_token_limit",
+      "source_study": "pilot-001-reanalyzed",
+      "artifact": ".squelch/studies/pilot-001-reanalyzed/study.json#reclassified_runs",
+      "evidence_stage": "screening",
+      "supports_conclusion": true,
+      "why": "Re-derived offline from recorded stop_reason events; zero truncated-with-tools cases, so re-derivation is exact."
+    },
+    {
+      "id": "w01-cost",
+      "claim": "~61 s, ~1700 input and ~1640 output tokens per run, $0.00",
+      "source_study": "pilot-001",
+      "artifact": ".squelch/studies/pilot-001/study.json#usage_totals",
+      "evidence_stage": "screening",
+      "supports_conclusion": true,
+      "why": "Directly measured over 48 runs; local inference has zero marginal cost."
+    },
+    {
+      "id": "w01-baseline-ceiling",
+      "claim": "3 of 4 task families have a no-skill baseline of 1.00 on qwen3:8b",
+      "source_study": "pilot-001-reanalyzed",
+      "artifact": ".squelch/studies/pilot-001-reanalyzed/study.json#cells",
+      "evidence_stage": "screening",
+      "supports_conclusion": true,
+      "why": "Preregistered H2 calibration check; failed, so those tasks are uninformative for composition."
+    },
+    {
+      "id": "w01-test-count",
+      "claim": "110 tests pass without an API key or network",
+      "source_study": null,
+      "artifact": "uv run pytest -m 'not docker'",
+      "evidence_stage": "scripted",
+      "supports_conclusion": true,
+      "why": "Directly reproducible from a fresh checkout."
+    }
+  ]
+}
