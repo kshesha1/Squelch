@@ -85,6 +85,7 @@ class TerminationReason(StrEnum):
     FINAL_RESPONSE = "final_response"
     MODEL_CALL_LIMIT = "model_call_limit"
     TOOL_CALL_LIMIT = "tool_call_limit"
+    OUTPUT_TOKEN_LIMIT = "output_token_limit"
     TIMEOUT = "timeout"
     BACKEND_ERROR = "backend_error"
     HARNESS_ERROR = "harness_error"

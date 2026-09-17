@@ -46,6 +46,11 @@ from squelch.skills.loader import SkillPackage
 
 MAX_SYSTEM_PROMPT_CHARS = 200_000
 
+# Provider stop reasons meaning "generation was cut off by the token cap".
+# Ollama reports "length"; the Anthropic-style spelling is included so a
+# future backend behind the same protocol is classified identically.
+TRUNCATION_STOP_REASONS = frozenset({"length", "max_tokens"})
+
 BASE_SYSTEM_PROMPT = (
     "You are a coding agent working in a sandboxed task workspace. "
     "Use the provided tools to inspect and edit files. "
@@ -247,6 +252,22 @@ class StageScheduler:
                 },
                 stage_id=stage.stage_id, agent_id=worker_id,
             )
+
+            # A response cut off by the output cap is an exhausted output
+            # budget, never a normal final answer (spec §4.3). Treating it as
+            # `completed` would silently score truncated work as ordinary
+            # agent failure and hide a limits artifact.
+            if response.stop_reason in TRUNCATION_STOP_REASONS:
+                termination = TerminationReason.OUTPUT_TOKEN_LIMIT
+                self.events.emit(
+                    "limit_reached",
+                    {"limit": "max_output_tokens",
+                     "value": stage.limits.max_output_tokens,
+                     "stop_reason": response.stop_reason,
+                     "had_tool_calls": bool(response.tool_calls)},
+                    stage_id=stage.stage_id, agent_id=worker_id,
+                )
+                break
 
             if not response.wants_tools:
                 final_text = response.text

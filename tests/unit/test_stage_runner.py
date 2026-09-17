@@ -2,6 +2,7 @@ import json
 
 import pytest
 
+from squelch.backends.protocol import ModelResponse
 from squelch.backends.scripted import ScriptedBackend
 from squelch.runner.stage import (
     MAX_SYSTEM_PROMPT_CHARS,
@@ -256,3 +257,33 @@ def test_workspace_reset_between_runs(lab):
     ws = lab["root"] / "runs" / "run-a" / "workspace"
     assert not (ws / "leftover.txt").exists()
     assert (ws / "input.txt").exists()
+
+
+def test_truncated_response_is_output_budget_limit_not_completed(lab):
+    """A response cut off by the token cap must never score as `completed`.
+
+    Regression: pilot-001 run r0038 hit ollama's stop_reason="length" and was
+    recorded as a normal final_response, hiding a limits artifact inside an
+    ordinary task failure.
+    """
+    class TruncatingBackend(ScriptedBackend):
+        def complete(self, request):
+            resp = super().complete(request)
+            return ModelResponse(
+                text=resp.text, tool_calls=resp.tool_calls, usage=resp.usage,
+                reported_model_id=resp.reported_model_id, stop_reason="length",
+            )
+
+    backend = TruncatingBackend([
+        {"tool_calls": [{"name": "write_file",
+                         "input": {"path": "out.txt", "content": "correct"}}]},
+        {"final": "partial answer cut off"},
+    ])
+    result = run(lab, backend, ONE_STAGE, run_id="run-truncated")
+    assert result.status is RunStatus.AGENT_LIMIT
+    assert result.termination_reason is TerminationReason.OUTPUT_TOKEN_LIMIT
+    assert result.task_success is False  # non-success for the task endpoint
+    events = [json.loads(line) for line in open(result.trace_path, encoding="utf-8")]
+    limit = next(e for e in events if e["type"] == "limit_reached")
+    assert limit["payload"]["limit"] == "max_output_tokens"
+    assert limit["payload"]["stop_reason"] == "length"
