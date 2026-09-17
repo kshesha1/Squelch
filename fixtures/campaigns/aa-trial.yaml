@@ -1,0 +1,33 @@
+# A/A trial (spec §5.4): two conditions with IDENTICAL skill exposure,
+# labeled differently. Any difference between aa1 and aa2 is harness noise
+# plus model variability, never a skill effect. This is the yardstick that
+# says how large a real effect must be before it means anything.
+schema_version: '1'
+name: aa-trial
+backend: ollama
+preregistration: ../../docs/preregistration/phase-01.yaml
+skills_root: ../skills
+graders_root: ../graders
+model:
+  id: qwen3:8b
+  host: http://localhost:11434
+  temperature: 0.2
+  max_output_tokens: 2048
+runner:
+  loading: forced
+  max_model_calls: 12
+  max_tool_calls: 30
+  task_timeout_seconds: 600
+dataset:
+  manifest: ../tasks/conflict-demo.yaml
+  split: development
+conditions:
+  - {id: aa1, skills: [minimal-change], policy: shared}
+  - {id: aa2, skills: [minimal-change], policy: shared}
+repetitions: 3
+schedule_seed: 99
+budget:
+  max_total_input_tokens: 1000000
+  max_total_output_tokens: 200000
+analysis:
+  stage: screening

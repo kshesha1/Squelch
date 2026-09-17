@@ -72,3 +72,24 @@ def test_both_skill_bodies_exposed_in_ab_events(study):
                   open(root / study_id / "runs" / r.run_id / "events.jsonl")]
         loaded = [e["payload"]["skill_id"] for e in events if e["type"] == "skill_loaded"]
         assert loaded == ["modernize-thoroughly", "minimal-change"]
+
+
+def test_condition_diagnostics_expose_verbosity_and_truncation(study):
+    """Verbosity/truncation per condition must be visible beside every rate.
+
+    A condition can fail by hitting the output cap rather than by reasoning
+    worse; that confound has to be readable, not discovered by hand.
+    """
+    root, study_id, _ = study
+    summary = json.loads((root / study_id / "study.json").read_text())
+    diags = {d["condition_id"]: d for d in summary["condition_diagnostics"]}
+    assert set(diags) == {"none", "a", "b", "ab"}
+    for d in diags.values():
+        assert d["n"] > 0
+        assert d["median_output_tokens"] > 0
+        assert d["truncated_runs"] == 0  # scripted transcripts never truncate
+
+    out = render_study_report(root / study_id, root / "diag-report.html")
+    html = out.read_text()
+    assert "Condition diagnostics" in html
+    assert "Runs truncated by output cap" in html
