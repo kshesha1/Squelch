@@ -1,0 +1,9 @@
+schema_version: '1'
+task_id: json-config-v2
+family_id: json-configuration
+split: development
+allowed_outputs: ["*", "**/*"]
+checks:
+  - check_id: json-parse
+    cmd: ["python", "-c", "import json; json.load(open('config.json')); print('parseable')"]
+    public: true

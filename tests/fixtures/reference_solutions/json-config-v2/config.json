@@ -1,0 +1,4 @@
+{"service": {"name": "svc", "port": 8080},
+ "features": ["alpha", "beta"],
+ "limits": {"timeout_ms": 5000, "retries": 3},
+ "feature_count": 2}

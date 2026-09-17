@@ -1,0 +1,9 @@
+schema_version: '1'
+task_id: python-repair-v2
+family_id: small-python-repair
+split: development
+allowed_outputs: ["scaling.py"]
+checks:
+  - check_id: smoke
+    cmd: ["python", "-c", "import scaling; print(scaling.clamp_and_scale([1,5,9], 2, 8, 2))"]
+    public: true

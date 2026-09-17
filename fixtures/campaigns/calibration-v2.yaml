@@ -1,0 +1,32 @@
+# Difficulty calibration for the harder v2 task set (spec §5.5).
+# Measures the NO-SKILL baseline only: the question is whether each family
+# lands in the 0.4-0.8 band, where a skill effect has room to register.
+# A task that always passes or always fails carries no information.
+schema_version: '1'
+name: calibration-v2
+backend: ollama
+preregistration: ../../docs/preregistration/phase-01.yaml
+skills_root: ../skills
+graders_root: ../graders
+model:
+  id: qwen3:8b
+  host: http://localhost:11434
+  temperature: 0.2
+  max_output_tokens: 4096
+runner:
+  loading: forced
+  max_model_calls: 12
+  max_tool_calls: 30
+  task_timeout_seconds: 900
+dataset:
+  manifest: ../tasks/calibration-v2.yaml
+  split: development
+conditions:
+  - {id: none, skills: [], policy: shared}
+repetitions: 5
+schedule_seed: 11
+budget:
+  max_total_input_tokens: 2000000
+  max_total_output_tokens: 400000
+analysis:
+  stage: screening

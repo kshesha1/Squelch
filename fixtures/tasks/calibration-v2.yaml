@@ -1,0 +1,6 @@
+schema_version: '1'
+tasks:
+  - json-config-v2
+  - python-repair-v2
+  - robust-input-v2
+  - api-migration
