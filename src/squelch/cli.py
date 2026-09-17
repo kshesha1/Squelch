@@ -186,6 +186,42 @@ def run(
 
 
 @app.command()
+def replay(
+    study_id: str = typer.Argument(...),
+    out_study: str | None = typer.Option(None, "--out-study",
+                                         help="Derived study id (default: <study>-reanalyzed)."),
+) -> None:
+    """Re-analyze a stored study offline. Contacts nothing; re-runs nothing.
+
+    Re-derives each run's status and termination from its recorded events
+    using the current classification rules, and writes a NEW derived study.
+    The source study is never modified.
+    """
+    from squelch.analysis.replay import ReplayError, replay_study
+
+    source = RESULTS_ROOT / "studies" / study_id
+    if not (source / "study.json").exists():
+        typer.echo(f"invalid: no study summary at {source}/study.json", err=True)
+        raise typer.Exit(EXIT_INVALID)
+    dest = RESULTS_ROOT / "studies" / (out_study or f"{study_id}-reanalyzed")
+    try:
+        summary = replay_study(source, dest)
+    except ReplayError as exc:
+        typer.echo(f"invalid: {exc}", err=True)
+        raise typer.Exit(EXIT_INVALID) from exc
+    changed = summary["reclassified_runs"]
+    typer.echo(f"derived study: {dest.name}")
+    typer.echo(f"runs re-analyzed: {summary['total_runs']}  "
+               f"reclassified: {len(changed)}")
+    for c in changed:
+        typer.echo(f"  {c['run_id']}: {c['was']['status']}/"
+                   f"{c['was']['termination_reason']} -> "
+                   f"{c['now']['status']}/{c['now']['termination_reason']}")
+    typer.echo(f"status counts: {summary['status_counts']}")
+    typer.echo("no model was called; grading unchanged")
+
+
+@app.command()
 def report(
     study_id: str = typer.Argument(...),
     out: Path = typer.Option(Path("report.html"), "--out"),
