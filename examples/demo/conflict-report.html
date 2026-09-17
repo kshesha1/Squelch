@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Squelch study report — conflict-demo</title>
+<style>
+body { font-family: -apple-system, system-ui, sans-serif; margin: 2rem auto; max-width: 70rem;
+       padding: 0 1rem; color: #1a1a1a; }
+table { border-collapse: collapse; margin: 1rem 0; width: 100%; font-size: 0.92rem; }
+th, td { border: 1px solid #ccc; padding: 0.35rem 0.6rem; text-align: left;
+         vertical-align: top; }
+th { background: #f3f3f3; }
+.disclosure { background: #fff6e0; border: 1px solid #e0c060; padding: 0.8rem 1rem;
+              border-radius: 6px; margin: 1rem 0; }
+.meta { color: #555; font-size: 0.88rem; }
+.pass { color: #0a7a2f; font-weight: 600; } .fail { color: #b00020; font-weight: 600; }
+.neg { color: #b00020; } .pos { color: #0a7a2f; }
+code { background: #f5f5f5; padding: 0 0.2rem; border-radius: 3px; }
+details { margin: 0.4rem 0; }
+.small { font-size: 0.82rem; color: #444; }
+</style>
+</head>
+<body>
+<h1>Squelch study report</h1>
+<div class="disclosure"><strong>Disclosure.</strong> Scripted evidence validates the harness program only; it is never a model-performance claim. Fixtures are authored controls. CONSTRUCTED FIXTURE PRESENT: modernize-thoroughly was authored to collide by design and says nothing about how often real skills conflict.</div>
+<p class="meta">
+Campaign: <code>conflict-demo</code> ·
+Backend: <code>scripted</code> ·
+Evidence stage: <code>scripted</code> ·
+Environment: <code>local:python-3.13.14:darwin</code> ·
+Runner: <code>0.1.0a0</code><br>
+Config hash: <code>sha256:a8d16c66a7ead0fc8593257941cc4ffecf243388686813bbe920bc5715b95fbf</code>
+
+<br>Token usage:
+2,500 in /
+1,250 out ·
+Spend: $0.00
+
+</p>
+
+<h2>Status counts</h2>
+<table><tr><th>Status</th><th>Runs</th></tr>
+
+<tr><td>completed</td><td>8</td></tr>
+
+<tr><th>Total</th><th>8</th></tr>
+</table>
+
+<h2>Task success by condition</h2>
+<p class="meta">Success rate uses the valid denominator (completed + agent_limit runs).</p>
+<table>
+<tr><th>Task</th><th>Condition</th><th>Skills</th><th>Successes</th><th>Valid N</th>
+<th>Planned N</th><th>Rate</th></tr>
+
+<tr>
+  <td>api-migration</td>
+  <td>a</td>
+  <td class="small">modernize-thoroughly</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1.00</td>
+</tr>
+
+<tr>
+  <td>api-migration</td>
+  <td>ab</td>
+  <td class="small">modernize-thoroughly, minimal-change</td>
+  <td>0</td>
+  <td>1</td>
+  <td>1</td>
+  <td>0.00</td>
+</tr>
+
+<tr>
+  <td>api-migration</td>
+  <td>b</td>
+  <td class="small">minimal-change</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1.00</td>
+</tr>
+
+<tr>
+  <td>api-migration</td>
+  <td>none</td>
+  <td class="small">(no skills)</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1.00</td>
+</tr>
+
+<tr>
+  <td>python-repair</td>
+  <td>a</td>
+  <td class="small">modernize-thoroughly</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1.00</td>
+</tr>
+
+<tr>
+  <td>python-repair</td>
+  <td>ab</td>
+  <td class="small">modernize-thoroughly, minimal-change</td>
+  <td>0</td>
+  <td>1</td>
+  <td>1</td>
+  <td>0.00</td>
+</tr>
+
+<tr>
+  <td>python-repair</td>
+  <td>b</td>
+  <td class="small">minimal-change</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1.00</td>
+</tr>
+
+<tr>
+  <td>python-repair</td>
+  <td>none</td>
+  <td class="small">(no skills)</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1.00</td>
+</tr>
+
+</table>
+
+
+<h2>Four-condition interaction analysis</h2>
+<p class="meta">Contrasts on the additive probability scale (spec §5.5):
+pair_vs_A = p(ab) − p(a); pair_vs_B = p(ab) − p(b);
+additive_interaction = p(ab) − p(a) − p(b) + p(none). A negative contrast alone
+does not establish a harmful pair; intervals are Wilson 95%.</p>
+<table>
+<tr><th>Scope</th>
+<th>p(none) [95% CI]</th><th>p(a) [95% CI]</th><th>p(b) [95% CI]</th><th>p(ab) [95% CI]</th>
+<th>pair_vs_A</th><th>pair_vs_B</th><th>interaction</th><th>Notes</th></tr>
+
+<tr>
+  <td>api-migration</td>
+  
+  <td>1.00
+      <span class="small">[0.21, 1.00]
+      (1/1)</span>
+      </td>
+  
+  <td>1.00
+      <span class="small">[0.21, 1.00]
+      (1/1)</span>
+      </td>
+  
+  <td>1.00
+      <span class="small">[0.21, 1.00]
+      (1/1)</span>
+      </td>
+  
+  <td>0.00
+      <span class="small">[0.00, 0.79]
+      (0/1)</span>
+      </td>
+  
+  
+  
+  <td class="neg">
+    -1.00</td>
+  
+  
+  <td class="neg">
+    -1.00</td>
+  
+  
+  <td class="neg">
+    -1.00</td>
+  
+  <td class="small">ceiling/floor cells distort the additive interaction contrast: none, a, b, ab</td>
+</tr>
+
+<tr>
+  <td>python-repair</td>
+  
+  <td>1.00
+      <span class="small">[0.21, 1.00]
+      (1/1)</span>
+      </td>
+  
+  <td>1.00
+      <span class="small">[0.21, 1.00]
+      (1/1)</span>
+      </td>
+  
+  <td>1.00
+      <span class="small">[0.21, 1.00]
+      (1/1)</span>
+      </td>
+  
+  <td>0.00
+      <span class="small">[0.00, 0.79]
+      (0/1)</span>
+      </td>
+  
+  
+  
+  <td class="neg">
+    -1.00</td>
+  
+  
+  <td class="neg">
+    -1.00</td>
+  
+  
+  <td class="neg">
+    -1.00</td>
+  
+  <td class="small">ceiling/floor cells distort the additive interaction contrast: none, a, b, ab</td>
+</tr>
+
+<tr>
+  <td>ALL TASKS (pooled)</td>
+  
+  <td>1.00
+      <span class="small">[0.34, 1.00]
+      (2/2)</span>
+      </td>
+  
+  <td>1.00
+      <span class="small">[0.34, 1.00]
+      (2/2)</span>
+      </td>
+  
+  <td>1.00
+      <span class="small">[0.34, 1.00]
+      (2/2)</span>
+      </td>
+  
+  <td>0.00
+      <span class="small">[0.00, 0.66]
+      (0/2)</span>
+      </td>
+  
+  
+  
+  <td class="neg">
+    -1.00</td>
+  
+  
+  <td class="neg">
+    -1.00</td>
+  
+  
+  <td class="neg">
+    -1.00</td>
+  
+  <td class="small">ceiling/floor cells distort the additive interaction contrast: none, a, b, ab</td>
+</tr>
+
+</table>
+
+
+
+<h2>Fixture provenance</h2>
+<p class="meta">Where each exposed skill came from. A constructed fixture was
+authored to collide by design; it validates the instrument and says nothing about
+how often skills conflict in practice. Provenance is read from the package, never
+inferred — <code>undeclared</code> means the package did not state it.</p>
+<table>
+<tr><th>Skill</th><th>Provenance</th><th>Package hash</th></tr>
+
+<tr>
+  <td>minimal-change</td>
+  <td class="">undeclared</td>
+  <td class="small"><code>sha256:2add045104fa4c14bd2d1f214f64d246566e82158cb064c5d0bc67ef5dc9f202</code></td>
+</tr>
+
+<tr>
+  <td>modernize-thoroughly</td>
+  <td class="fail">constructed-conflict-fixture</td>
+  <td class="small"><code>sha256:f45f67ef7f30764885533923f5cdd7e197d494d44c2789c798bdeed0105fe3b3</code></td>
+</tr>
+
+</table>
+
+
+
+<h2>Condition diagnostics — verbosity and truncation</h2>
+<p class="meta">Loading more instructions lengthens the model's output as well as the
+prompt, so a condition can fail by hitting the output cap rather than by reasoning
+worse. A condition with visibly higher output tokens or any truncated runs is
+confounded with the limits, and its success rate must not be read as an
+instruction effect on its own.</p>
+<table>
+<tr><th>Condition</th><th>Valid runs</th><th>Median output tokens</th>
+<th>Max output tokens</th><th>Runs truncated by output cap</th></tr>
+
+<tr>
+  <td>a</td><td>2</td>
+  <td>200</td>
+  <td>200</td>
+  <td class="">0</td>
+</tr>
+
+<tr>
+  <td>ab</td><td>2</td>
+  <td>150</td>
+  <td>150</td>
+  <td class="">0</td>
+</tr>
+
+<tr>
+  <td>b</td><td>2</td>
+  <td>150</td>
+  <td>150</td>
+  <td class="">0</td>
+</tr>
+
+<tr>
+  <td>none</td><td>2</td>
+  <td>150</td>
+  <td>150</td>
+  <td class="">0</td>
+</tr>
+
+</table>
+
+
+<h2>Runs</h2>
+<table>
+<tr><th>Run</th><th>Task</th><th>Cond.</th><th>Rep</th><th>Status</th><th>Success</th>
+<th>Termination</th><th>Calls (model/tool)</th><th>Tokens (in/out)</th>
+<th>File changes</th><th>Failed assertions</th></tr>
+
+<tr>
+  <td><code>conflict-demo-r0001</code></td>
+  <td>python-repair</td>
+  <td>ab</td>
+  <td>1</td>
+  <td>completed</td>
+  <td class="fail">
+      False</td>
+  <td>final_response</td>
+  <td>3/3</td>
+  <td>300/150</td>
+  <td class="small">A bounds_helpers.py<br>M ranges.py<br></td>
+  <td class="small">
+      <span class="fail">module-imports</span>
+      ModuleNotFoundError(&#34;No module named &#39;bounds_helpers&#39;&#34;)<br>
+      </td>
+</tr>
+
+<tr>
+  <td><code>conflict-demo-r0002</code></td>
+  <td>python-repair</td>
+  <td>a</td>
+  <td>1</td>
+  <td>completed</td>
+  <td class="pass">
+      True</td>
+  <td>final_response</td>
+  <td>3/2</td>
+  <td>300/150</td>
+  <td class="small">M ranges.py<br></td>
+  <td class="small">none</td>
+</tr>
+
+<tr>
+  <td><code>conflict-demo-r0003</code></td>
+  <td>python-repair</td>
+  <td>none</td>
+  <td>1</td>
+  <td>completed</td>
+  <td class="pass">
+      True</td>
+  <td>final_response</td>
+  <td>3/2</td>
+  <td>300/150</td>
+  <td class="small">M ranges.py<br></td>
+  <td class="small">none</td>
+</tr>
+
+<tr>
+  <td><code>conflict-demo-r0004</code></td>
+  <td>python-repair</td>
+  <td>b</td>
+  <td>1</td>
+  <td>completed</td>
+  <td class="pass">
+      True</td>
+  <td>final_response</td>
+  <td>3/2</td>
+  <td>300/150</td>
+  <td class="small">M ranges.py<br></td>
+  <td class="small">none</td>
+</tr>
+
+<tr>
+  <td><code>conflict-demo-r0005</code></td>
+  <td>api-migration</td>
+  <td>a</td>
+  <td>1</td>
+  <td>completed</td>
+  <td class="pass">
+      True</td>
+  <td>final_response</td>
+  <td>4/3</td>
+  <td>400/200</td>
+  <td class="small">M app.py<br></td>
+  <td class="small">none</td>
+</tr>
+
+<tr>
+  <td><code>conflict-demo-r0006</code></td>
+  <td>api-migration</td>
+  <td>b</td>
+  <td>1</td>
+  <td>completed</td>
+  <td class="pass">
+      True</td>
+  <td>final_response</td>
+  <td>3/2</td>
+  <td>300/150</td>
+  <td class="small">M app.py<br></td>
+  <td class="small">none</td>
+</tr>
+
+<tr>
+  <td><code>conflict-demo-r0007</code></td>
+  <td>api-migration</td>
+  <td>ab</td>
+  <td>1</td>
+  <td>completed</td>
+  <td class="fail">
+      False</td>
+  <td>final_response</td>
+  <td>3/2</td>
+  <td>300/150</td>
+  <td class="small">M app.py<br></td>
+  <td class="small">
+      <span class="fail">timeout-preserved</span>
+      calls: [{&#39;url&#39;: &#39;http://example/status&#39;, &#39;timeout&#39;: 10.0}]<br>
+      </td>
+</tr>
+
+<tr>
+  <td><code>conflict-demo-r0008</code></td>
+  <td>api-migration</td>
+  <td>none</td>
+  <td>1</td>
+  <td>completed</td>
+  <td class="pass">
+      True</td>
+  <td>final_response</td>
+  <td>3/2</td>
+  <td>300/150</td>
+  <td class="small">M app.py<br></td>
+  <td class="small">none</td>
+</tr>
+
+</table>
+<p class="meta">Per-run event traces (ordered observable events) and full diffs live next
+to each run's artifacts: <code>runs/&lt;run-id&gt;/events.jsonl</code> and
+<code>runs/&lt;run-id&gt;/diff.patch</code>.</p>
+<p class="meta">Generated offline by squelch; no remote assets or analytics.</p>
+</body>
+</html>

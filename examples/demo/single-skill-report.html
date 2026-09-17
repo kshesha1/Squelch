@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Squelch study report — offline-demo</title>
+<style>
+body { font-family: -apple-system, system-ui, sans-serif; margin: 2rem auto; max-width: 70rem;
+       padding: 0 1rem; color: #1a1a1a; }
+table { border-collapse: collapse; margin: 1rem 0; width: 100%; font-size: 0.92rem; }
+th, td { border: 1px solid #ccc; padding: 0.35rem 0.6rem; text-align: left;
+         vertical-align: top; }
+th { background: #f3f3f3; }
+.disclosure { background: #fff6e0; border: 1px solid #e0c060; padding: 0.8rem 1rem;
+              border-radius: 6px; margin: 1rem 0; }
+.meta { color: #555; font-size: 0.88rem; }
+.pass { color: #0a7a2f; font-weight: 600; } .fail { color: #b00020; font-weight: 600; }
+.neg { color: #b00020; } .pos { color: #0a7a2f; }
+code { background: #f5f5f5; padding: 0 0.2rem; border-radius: 3px; }
+details { margin: 0.4rem 0; }
+.small { font-size: 0.82rem; color: #444; }
+</style>
+</head>
+<body>
+<h1>Squelch study report</h1>
+<div class="disclosure"><strong>Disclosure.</strong> Scripted evidence validates the harness program only; it is never a model-performance claim. Fixtures are authored controls.</div>
+<p class="meta">
+Campaign: <code>offline-demo</code> ·
+Backend: <code>scripted</code> ·
+Evidence stage: <code>scripted</code> ·
+Environment: <code>local:python-3.13.14:darwin</code> ·
+Runner: <code>0.1.0a0</code><br>
+Config hash: <code>sha256:1761c12542edcb27fa74b4a15bfc675e11f8a8b303a994742b8025feffcc9f94</code>
+
+<br>Token usage:
+3,000 in /
+1,500 out ·
+Spend: $0.00
+
+</p>
+
+<h2>Status counts</h2>
+<table><tr><th>Status</th><th>Runs</th></tr>
+
+<tr><td>completed</td><td>8</td></tr>
+
+<tr><th>Total</th><th>8</th></tr>
+</table>
+
+<h2>Task success by condition</h2>
+<p class="meta">Success rate uses the valid denominator (completed + agent_limit runs).</p>
+<table>
+<tr><th>Task</th><th>Condition</th><th>Skills</th><th>Successes</th><th>Valid N</th>
+<th>Planned N</th><th>Rate</th></tr>
+
+<tr>
+  <td>api-migration</td>
+  <td>none</td>
+  <td class="small">(no skills)</td>
+  <td>0</td>
+  <td>1</td>
+  <td>1</td>
+  <td>0.00</td>
+</tr>
+
+<tr>
+  <td>api-migration</td>
+  <td>skill</td>
+  <td class="small">minimal-change</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1.00</td>
+</tr>
+
+<tr>
+  <td>json-config</td>
+  <td>none</td>
+  <td class="small">(no skills)</td>
+  <td>0</td>
+  <td>1</td>
+  <td>1</td>
+  <td>0.00</td>
+</tr>
+
+<tr>
+  <td>json-config</td>
+  <td>skill</td>
+  <td class="small">minimal-change</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1.00</td>
+</tr>
+
+<tr>
+  <td>python-repair</td>
+  <td>none</td>
+  <td class="small">(no skills)</td>
+  <td>0</td>
+  <td>1</td>
+  <td>1</td>
+  <td>0.00</td>
+</tr>
+
+<tr>
+  <td>python-repair</td>
+  <td>skill</td>
+  <td class="small">minimal-change</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1.00</td>
+</tr>
+
+<tr>
+  <td>robust-input</td>
+  <td>none</td>
+  <td class="small">(no skills)</td>
+  <td>0</td>
+  <td>1</td>
+  <td>1</td>
+  <td>0.00</td>
+</tr>
+
+<tr>
+  <td>robust-input</td>
+  <td>skill</td>
+  <td class="small">minimal-change</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1</td>
+  <td>1.00</td>
+</tr>
+
+</table>
+
+
+
+
+<h2>Fixture provenance</h2>
+<p class="meta">Where each exposed skill came from. A constructed fixture was
+authored to collide by design; it validates the instrument and says nothing about
+how often skills conflict in practice. Provenance is read from the package, never
+inferred — <code>undeclared</code> means the package did not state it.</p>
+<table>
+<tr><th>Skill</th><th>Provenance</th><th>Package hash</th></tr>
+
+<tr>
+  <td>minimal-change</td>
+  <td class="">undeclared</td>
+  <td class="small"><code>sha256:2add045104fa4c14bd2d1f214f64d246566e82158cb064c5d0bc67ef5dc9f202</code></td>
+</tr>
+
+</table>
+
+
+
+<h2>Condition diagnostics — verbosity and truncation</h2>
+<p class="meta">Loading more instructions lengthens the model's output as well as the
+prompt, so a condition can fail by hitting the output cap rather than by reasoning
+worse. A condition with visibly higher output tokens or any truncated runs is
+confounded with the limits, and its success rate must not be read as an
+instruction effect on its own.</p>
+<table>
+<tr><th>Condition</th><th>Valid runs</th><th>Median output tokens</th>
+<th>Max output tokens</th><th>Runs truncated by output cap</th></tr>
+
+<tr>
+  <td>none</td><td>4</td>
+  <td>150</td>
+  <td>150</td>
+  <td class="">0</td>
+</tr>
+
+<tr>
+  <td>skill</td><td>4</td>
+  <td>250</td>
+  <td>250</td>
+  <td class="">0</td>
+</tr>
+
+</table>
+
+
+<h2>Runs</h2>
+<table>
+<tr><th>Run</th><th>Task</th><th>Cond.</th><th>Rep</th><th>Status</th><th>Success</th>
+<th>Termination</th><th>Calls (model/tool)</th><th>Tokens (in/out)</th>
+<th>File changes</th><th>Failed assertions</th></tr>
+
+<tr>
+  <td><code>offline-demo-r0001</code></td>
+  <td>json-config</td>
+  <td>skill</td>
+  <td>1</td>
+  <td>completed</td>
+  <td class="pass">
+      True</td>
+  <td>final_response</td>
+  <td>5/4</td>
+  <td>500/250</td>
+  <td class="small">A config.json<br></td>
+  <td class="small">none</td>
+</tr>
+
+<tr>
+  <td><code>offline-demo-r0002</code></td>
+  <td>json-config</td>
+  <td>none</td>
+  <td>1</td>
+  <td>completed</td>
+  <td class="fail">
+      False</td>
+  <td>final_response</td>
+  <td>3/3</td>
+  <td>300/150</td>
+  <td class="small">A config.json<br>A notes.txt<br></td>
+  <td class="small">
+      <span class="fail">no-unrelated-files</span>
+      files present: [&#39;README.txt&#39;, &#39;config.json&#39;, &#39;notes.txt&#39;]<br>
+      </td>
+</tr>
+
+<tr>
+  <td><code>offline-demo-r0003</code></td>
+  <td>python-repair</td>
+  <td>skill</td>
+  <td>1</td>
+  <td>completed</td>
+  <td class="pass">
+      True</td>
+  <td>final_response</td>
+  <td>4/3</td>
+  <td>400/200</td>
+  <td class="small">M ranges.py<br></td>
+  <td class="small">none</td>
+</tr>
+
+<tr>
+  <td><code>offline-demo-r0004</code></td>
+  <td>python-repair</td>
+  <td>none</td>
+  <td>1</td>
+  <td>completed</td>
+  <td class="fail">
+      False</td>
+  <td>final_response</td>
+  <td>3/2</td>
+  <td>300/150</td>
+  <td class="small">M ranges.py<br></td>
+  <td class="small">
+      <span class="fail">high-endpoint-included</span>
+      in_range(10,1,10)=False<br><span class="fail">degenerate-range</span>
+      in_range(3,3,3)=False<br>
+      </td>
+</tr>
+
+<tr>
+  <td><code>offline-demo-r0005</code></td>
+  <td>api-migration</td>
+  <td>none</td>
+  <td>1</td>
+  <td>completed</td>
+  <td class="fail">
+      False</td>
+  <td>final_response</td>
+  <td>3/2</td>
+  <td>300/150</td>
+  <td class="small">M app.py<br></td>
+  <td class="small">
+      <span class="fail">timeout-preserved</span>
+      calls: [{&#39;url&#39;: &#39;http://example/status&#39;, &#39;timeout&#39;: 10.0}]<br>
+      </td>
+</tr>
+
+<tr>
+  <td><code>offline-demo-r0006</code></td>
+  <td>api-migration</td>
+  <td>skill</td>
+  <td>1</td>
+  <td>completed</td>
+  <td class="pass">
+      True</td>
+  <td>final_response</td>
+  <td>5/4</td>
+  <td>500/250</td>
+  <td class="small">M app.py<br></td>
+  <td class="small">none</td>
+</tr>
+
+<tr>
+  <td><code>offline-demo-r0007</code></td>
+  <td>robust-input</td>
+  <td>skill</td>
+  <td>1</td>
+  <td>completed</td>
+  <td class="pass">
+      True</td>
+  <td>final_response</td>
+  <td>4/3</td>
+  <td>400/200</td>
+  <td class="small">M parse.py<br></td>
+  <td class="small">none</td>
+</tr>
+
+<tr>
+  <td><code>offline-demo-r0008</code></td>
+  <td>robust-input</td>
+  <td>none</td>
+  <td>1</td>
+  <td>completed</td>
+  <td class="fail">
+      False</td>
+  <td>final_response</td>
+  <td>3/2</td>
+  <td>300/150</td>
+  <td class="small">M parse.py<br></td>
+  <td class="small">
+      <span class="fail">whitespace-only</span>
+      got &#39;raised ValueError(&#34;invalid literal for int() with base 10: \&#39;\&#39;&#34;)&#39;<br><span class="fail">bad-tokens-skipped</span>
+      got &#39;raised ValueError(&#34;invalid literal for int() with base 10: \&#39;x\&#39;&#34;)&#39;<br><span class="fail">all-bad-tokens</span>
+      got &#39;raised ValueError(&#34;invalid literal for int() with base 10: \&#39;a\&#39;&#34;)&#39;<br>
+      </td>
+</tr>
+
+</table>
+<p class="meta">Per-run event traces (ordered observable events) and full diffs live next
+to each run's artifacts: <code>runs/&lt;run-id&gt;/events.jsonl</code> and
+<code>runs/&lt;run-id&gt;/diff.patch</code>.</p>
+<p class="meta">Generated offline by squelch; no remote assets or analytics.</p>
+</body>
+</html>

@@ -1,0 +1,150 @@
+{
+  "backend": "scripted",
+  "campaign": "conflict-demo",
+  "cells": [
+    {
+      "condition_id": "a",
+      "n": 1,
+      "runs": [
+        "conflict-demo-r0005"
+      ],
+      "successes": 1,
+      "task_id": "api-migration",
+      "valid_n": 1
+    },
+    {
+      "condition_id": "ab",
+      "n": 1,
+      "runs": [
+        "conflict-demo-r0007"
+      ],
+      "successes": 0,
+      "task_id": "api-migration",
+      "valid_n": 1
+    },
+    {
+      "condition_id": "b",
+      "n": 1,
+      "runs": [
+        "conflict-demo-r0006"
+      ],
+      "successes": 1,
+      "task_id": "api-migration",
+      "valid_n": 1
+    },
+    {
+      "condition_id": "none",
+      "n": 1,
+      "runs": [
+        "conflict-demo-r0008"
+      ],
+      "successes": 1,
+      "task_id": "api-migration",
+      "valid_n": 1
+    },
+    {
+      "condition_id": "a",
+      "n": 1,
+      "runs": [
+        "conflict-demo-r0002"
+      ],
+      "successes": 1,
+      "task_id": "python-repair",
+      "valid_n": 1
+    },
+    {
+      "condition_id": "ab",
+      "n": 1,
+      "runs": [
+        "conflict-demo-r0001"
+      ],
+      "successes": 0,
+      "task_id": "python-repair",
+      "valid_n": 1
+    },
+    {
+      "condition_id": "b",
+      "n": 1,
+      "runs": [
+        "conflict-demo-r0004"
+      ],
+      "successes": 1,
+      "task_id": "python-repair",
+      "valid_n": 1
+    },
+    {
+      "condition_id": "none",
+      "n": 1,
+      "runs": [
+        "conflict-demo-r0003"
+      ],
+      "successes": 1,
+      "task_id": "python-repair",
+      "valid_n": 1
+    }
+  ],
+  "condition_diagnostics": [
+    {
+      "condition_id": "a",
+      "max_output_tokens": 200,
+      "median_output_tokens": 200,
+      "n": 2,
+      "truncated_runs": 0
+    },
+    {
+      "condition_id": "ab",
+      "max_output_tokens": 150,
+      "median_output_tokens": 150,
+      "n": 2,
+      "truncated_runs": 0
+    },
+    {
+      "condition_id": "b",
+      "max_output_tokens": 150,
+      "median_output_tokens": 150,
+      "n": 2,
+      "truncated_runs": 0
+    },
+    {
+      "condition_id": "none",
+      "max_output_tokens": 150,
+      "median_output_tokens": 150,
+      "n": 2,
+      "truncated_runs": 0
+    }
+  ],
+  "config_hash": "sha256:a8d16c66a7ead0fc8593257941cc4ffecf243388686813bbe920bc5715b95fbf",
+  "constructed_fixtures": [
+    "modernize-thoroughly"
+  ],
+  "disclosure": "Scripted evidence validates the harness program only; it is never a model-performance claim. Fixtures are authored controls. CONSTRUCTED FIXTURE PRESENT: modernize-thoroughly was authored to collide by design and says nothing about how often real skills conflict.",
+  "environment": "local:python-3.13.14:darwin",
+  "evidence_stage": "scripted",
+  "fixture_provenance": [
+    {
+      "package_hash": "sha256:2add045104fa4c14bd2d1f214f64d246566e82158cb064c5d0bc67ef5dc9f202",
+      "provenance": "undeclared",
+      "skill_id": "minimal-change"
+    },
+    {
+      "package_hash": "sha256:f45f67ef7f30764885533923f5cdd7e197d494d44c2789c798bdeed0105fe3b3",
+      "provenance": "constructed-conflict-fixture",
+      "skill_id": "modernize-thoroughly"
+    }
+  ],
+  "generated_at": "2026-09-17T14:38:39.711673+00:00",
+  "model_id": null,
+  "preregistration_hash": null,
+  "reused_runs": 0,
+  "runner_version": "0.1.0a0",
+  "schema_version": "1",
+  "spend_usd": 0.0,
+  "status_counts": {
+    "completed": 8
+  },
+  "total_runs": 8,
+  "usage_totals": {
+    "input_tokens": 2500,
+    "output_tokens": 1250
+  }
+}
