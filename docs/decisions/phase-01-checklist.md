@@ -1,97 +1,119 @@
 # Phase 1 implementation checklist
 
-Status as of 2026-09-15. Ticket IDs reference spec.md §6.
+Ticket IDs reference spec.md §6. Last updated 2026-09-17.
 
-## P1.1 Package skeleton — DONE (this pass)
+## Recorded deviations from the spec
 
-- [x] `pyproject.toml` with `squelch` CLI entry point; distribution name `squelch-skills`
-- [x] uv lockfile
+1. **Live backend is Ollama, not the Anthropic API** (spec §3.1). The
+   operator chose local inference: no API key, no cloud spend, model runs on
+   the host. The backend protocol is unchanged, so a hosted-API backend can
+   be added behind the same interface without touching experiment code.
+   Consequence: results describe `qwen3:8b` on this runner. Recorded
+   2026-09-16.
+2. **USD price table is not implemented.** Local inference has a known zero
+   marginal cost, recorded as `pricing_reference:
+   local_inference_zero_marginal_cost`. The budget ledger bounds *tokens*
+   rather than dollars. Any future paid backend stays `cost_unknown` until a
+   price table exists — pinned by test.
+
+## P1.1 Package skeleton — DONE
+
+- [x] `pyproject.toml` with a `squelch` CLI; distribution name `squelch-skills`
+- [x] uv lockfile; Ruff lint; pytest
 - [x] Pydantic v2 schemas for all §4.1 entities, §4.2 events, §4.3 statuses
-- [x] Canonical JSON hashing (sorted keys, no non-finite floats) + exact-byte file hashing
+- [x] Canonical JSON hashing (sorted keys, no non-finite floats) + exact-byte
+      file hashing
 - [x] Scripted backend behind the backend protocol
-- [x] `squelch doctor`, `validate`, `run` (scripted), `report`
-- [x] CI: lint + keyless tests + offline demo; Docker sandbox as a separate job
-- [x] Apache-2.0 license, README stating in-progress status and what is (not yet) measured
-- [ ] Public repository (local git only; pushing requires separate authorization —
-      spec §14.10)
-- [ ] Confirm `squelch-skills` is free on PyPI before first release
+- [x] `doctor`, `validate`, `plan`, `prereg`, `run`, `report`
+- [x] CI: lint + keyless tests + offline demo; Docker sandbox as a separate
+      job with an explicit daemon precondition
+- [x] Apache-2.0; README stating what is and is not supported by measurement
+- [ ] Public repository — local git only; pushing needs separate
+      authorization (spec §14.10)
+- [ ] Confirm `squelch-skills` is free on PyPI before any release
 
-## P1.2 Skill ingestion — DONE (this pass)
+## P1.2 Skill ingestion — DONE
 
-- [x] SKILL.md frontmatter parsing (name, description required)
+- [x] SKILL.md frontmatter parsing; name/description required
 - [x] Per-file exact-byte hashes; package identity covers reference files
-- [x] Symlink and size validation; path-boundary enforcement on resource reads
+- [x] Symlink, size, and path-boundary validation
 - [x] Unknown optional metadata preserved as data, never execution authority
-- [x] Inventory loader; fixtures `minimal-change`, `edge-case-checklist`
+- [x] Provenance surfaced from package metadata into every study and report
 
-## P1.3 Task engine — DONE for the offline path
+## P1.3 Task engine — DONE
 
-- [x] Four task fixtures: json-config, python-repair, api-migration, robust-input
-- [x] Trusted evaluator: fresh directory, allowed-output filtering, grader never
-      agent-visible, tamper/timeout/garbage-output tests
-- [x] DockerEnv implementing the §5.3 container contract; boundary tests in a
-      Docker-marked job
-- [x] LocalEnv clearly labeled non-isolating for scripted/offline development
-- [ ] Pinned task image digest (currently tag `python:3.12-slim`; pin a digest
-      before live runs)
-- [ ] **Baseline difficulty calibration (0.4–0.8 band) requires live runs — blocked
-      on P1.4/P1.5 and a budget. Not verifiable offline; do not claim it.**
+- [x] Trusted evaluator: fresh directory, allowed-output filtering, grader
+      never agent-visible; tamper / timeout / garbage-output / symlink tests
+- [x] DockerEnv implementing the §5.3 container contract, with boundary tests
+      (network off, read-only root, read-only mount) in a Docker-marked job
+- [x] LocalEnv labeled non-isolating; its identity string marks every record
+- [x] Eight task fixtures across four families, including harder v2 variants
+- [x] Grader calibration tests: hidden reference solutions must pass, starters
+      must not, graders must give partial signal (floor-effect guard)
+- [ ] Pin the task image by digest rather than the `python:3.12-slim` tag
+      before any confirmation-stage run
 
-## Runner foundation (ahead of P1.4)
+## P1.4 Live backend — DONE (Ollama)
 
-- [x] Stage scheduler executing a general `stage_plan`; no single-stage special case
-- [x] Forced skill exposure with `skill_loaded` events; no silent truncation
-      (planning fails on envelope overflow)
-- [x] Tool broker: list_files/read_file/write_file/run_checks, path boundaries,
-      allowlisted public checks only
-- [x] JSONL event log with stage_id, sequence, termination classification
-- [x] Scripted two-stage run through the scheduler (test)
+- [x] Ollama backend behind the backend protocol; `/api/chat` tool-use format
+      verified against the official documentation before implementation
+- [x] Model tag pinned explicitly in config; reported model identity recorded
+- [x] Usage capture (`prompt_eval_count` / `eval_count`)
+- [x] Server reachability probe before any live dispatch; `doctor` reports it
+- [x] Termination classification, including **output-cap truncation as
+      `agent_limit`** — bug found in live pilot-001 artifacts and fixed
+- [ ] A single hung request is bounded by the HTTP client timeout (600s)
+      rather than preempted mid-request
 
-## P1.4 Live backend — DONE, with an operator-approved deviation
+## P1.5 Campaign planner — DONE
 
-**Deviation from spec §3.1:** the operator chose a local Ollama backend
-instead of the Anthropic API (no API key, no cloud spend). The backend
-protocol is unchanged; an Anthropic backend can be added later behind the
-same interface. Recorded 2026-09-16.
+- [x] Token-budget ledger; `not_run_budget` persisted for unstarted runs
+- [x] Crash-safe `--resume`; corrupt artifacts re-run rather than trusted;
+      changed configs refused. Exercised for real when pilot-002 was
+      interrupted at run 3 and resumed.
+- [x] Preregistration required for live campaigns; hash bound into the study
+      summary and printed in the report
+- [x] `squelch plan` prints the grid and token envelope, contacting nothing
 
-- [x] Ollama backend behind the backend protocol; official /api/chat
-      tool-use format verified against docs before implementation
-- [x] Model ID pinned explicitly in campaign config (never `latest` silently);
-      reported model identity recorded per response
-- [x] Termination classification and per-call usage capture (prompt_eval_count /
-      eval_count)
-- [x] Server reachability smoke check before any live dispatch; `doctor` reports
-      ollama status
-- [ ] Wall-clock timeout is checked between model calls; a single hung request
-      is bounded by the HTTP client timeout (600s), not preempted mid-request
+## P1.6 Constructed conflict — MACHINERY DONE, RESEARCH EXIT CRITERION NOT MET
 
-## P1.5 Campaign planner — DONE for the local-inference model
-
-- [x] Token-budget ledger: cumulative caps, `not_run_budget` persisted for
-      unstarted runs, incomplete studies flagged (USD price table is N/A for
-      local inference; spend recorded as $0 with `free_local` status)
-- [x] Crash-safe persistence and `--resume`: completed identical planned run IDs
-      reused, corrupt artifacts re-run, changed configs refused
-- [x] Preregistration file + hash binding: live campaigns refuse to run without
-      one; hash recorded in study summary and report
-- [x] `squelch plan` (never contacts a model)
-
-## P1.6 Constructed conflict — machinery DONE; live exit criterion pending
-
-- [x] Constructed pair: `modernize-thoroughly` (broad edits) vs `minimal-change`
-      (minimal diffs, no new files); documented as constructed
-- [x] Four-condition grid (none/a/b/ab) with interaction contrasts + Wilson
-      intervals; scripted demo shows the full pattern offline
-- [ ] **Exit requirement (live): the pair shows reproducible degradation vs.
-      both singletons across repetitions on the live model, or the fixture is
-      redesigned.** Run `conflict-pilot.yaml` once Ollama + qwen3:8b are ready.
-- [ ] Baseline difficulty calibration (0.4–0.8 band) — measured by the same
-      pilot's `none` condition
+- [x] Constructed pair authored: `modernize-thoroughly` (whole-file rewrites,
+      extract helpers) vs `minimal-change` (no edits beyond the task, no new
+      files), labeled constructed everywhere it appears
+- [x] Four-condition grid with interaction contrasts and Wilson intervals;
+      scripted demo shows the full pattern offline
+- [ ] **The pair did not reproduce degradation against both singletons on the
+      live model.** See docs/weekly/week-01.md. Per spec §6 the fixture must
+      be redesigned until it does; that is the next bounded research task and
+      it does not block the implementation.
+- [ ] Baseline difficulty: 3 of 4 original tasks sat at 1.00 on qwen3:8b.
+      Harder v2 variants are authored and grader-calibrated; measuring their
+      live baselines is queued.
 
 ## P1.7 Report — DONE
 
-- [x] Conditions side by side with skills, assertion results, usage, file
-      changes (A/M/D + diff.patch artifact), per-run table, event trace paths
-- [x] Four-condition interaction analysis with intervals and ceiling/floor
-      caveats displayed inline
-- [x] Preregistration hash, token totals, spend, reused-run count disclosed
+- [x] Conditions side by side with the skills each exposed
+- [x] Per-run assertions, usage, termination reason, file changes, and a
+      `diff.patch` artifact
+- [x] Four-condition interaction analysis with intervals and inline
+      ceiling/floor caveats
+- [x] Fixture provenance table; constructed fixtures flagged in the
+      disclosure line
+- [x] Verbosity and truncation diagnostics beside every success rate
+- [x] Discloses backend, model, evidence stage, environment, N, status
+      counts, config hash, preregistration hash, token totals, spend
+- [x] HTML-escaped throughout; no remote assets, analytics, or CDN
+
+## Measured cost (replaces the §4.5 placeholder for this backend)
+
+From pilot-001, 48 live runs on qwen3:8b, local inference:
+
+| Quantity | Value |
+|---|---|
+| Wall clock | ~61 s per run (~50 min for 48 runs) |
+| Input tokens | ~1,700 per run (81,624 total) |
+| Output tokens | ~1,640 per run (78,871 total) |
+| USD | $0.00 — local inference, no marginal cost |
+
+The binding constraint is wall clock, not money. A 48-run grid is about an
+hour; plan phase-scale campaigns accordingly.
