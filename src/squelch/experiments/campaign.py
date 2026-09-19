@@ -27,6 +27,7 @@ from pathlib import Path
 import yaml
 
 from squelch import __version__
+from squelch.analysis.diagnostics import condition_diagnostics
 from squelch.backends.protocol import BackendError, ModelBackend
 from squelch.backends.scripted import ScriptedBackend
 from squelch.experiments.tasks import TaskFixture, load_task_manifest
@@ -46,7 +47,6 @@ from squelch.schemas import (
     RunSpec,
     RunStatus,
     StageSpec,
-    TerminationReason,
     check_schema_version,
     utc_now,
 )
@@ -484,34 +484,10 @@ def summarize(
             cell["valid_n"] += 1
             if r.task_success:
                 cell["successes"] += 1
-    # Per-condition verbosity and truncation: loading more instructions
-    # lengthens both the prompt and the model's output, so a condition can
-    # fail simply by running into the output cap. That is a limits artifact,
-    # not an instruction effect, and must be visible beside every rate.
-    diag: dict[str, dict] = {}
-    for spec in specs:
-        r = by_id.get(spec.run_id)
-        if r is None or r.status not in (RunStatus.COMPLETED, RunStatus.AGENT_LIMIT):
-            continue
-        d = diag.setdefault(
-            spec.condition_id,
-            {"condition_id": spec.condition_id, "output_tokens": [], "n": 0,
-             "truncated": 0},
-        )
-        d["n"] += 1
-        d["output_tokens"].append(r.usage.output_tokens)
-        if r.termination_reason is TerminationReason.OUTPUT_TOKEN_LIMIT:
-            d["truncated"] += 1
-    diagnostics = []
-    for d in sorted(diag.values(), key=lambda x: x["condition_id"]):
-        toks = sorted(d["output_tokens"])
-        diagnostics.append({
-            "condition_id": d["condition_id"],
-            "n": d["n"],
-            "median_output_tokens": toks[len(toks) // 2] if toks else 0,
-            "max_output_tokens": max(toks) if toks else 0,
-            "truncated_runs": d["truncated"],
-        })
+    # Verbosity and truncation sit beside every rate; see analysis/diagnostics.py.
+    diagnostics = condition_diagnostics(
+        (spec.condition_id, by_id[spec.run_id]) for spec in specs if spec.run_id in by_id
+    )
 
     # Fixture provenance must travel with the numbers (spec §11): a
     # deliberately constructed conflict must never be mistaken for a skill

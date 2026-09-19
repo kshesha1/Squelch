@@ -144,18 +144,23 @@ inferred — <code>undeclared</code> means the package did not state it.</p>
 {% if study.condition_diagnostics %}
 <h2>Condition diagnostics — verbosity and truncation</h2>
 <p class="meta">Loading more instructions lengthens the model's output as well as the
-prompt, so a condition can fail by hitting the output cap rather than by reasoning
-worse. A condition with visibly higher output tokens or any truncated runs is
-confounded with the limits, and its success rate must not be read as an
-instruction effect on its own.</p>
+prompt, so a condition can fail by hitting an output limit rather than by reasoning
+worse. Output tokens per run are a <em>total across the run's model calls</em>; compare
+calls and tokens per call to see whether a condition is wordier per response or just
+makes more calls. A condition with visibly higher output or any truncated runs is
+confounded with the limits, and its success rate must not be read as an instruction
+effect on its own.</p>
 <table>
-<tr><th>Condition</th><th>Valid runs</th><th>Median output tokens</th>
-<th>Max output tokens</th><th>Runs truncated by output cap</th></tr>
+<tr><th>Condition</th><th>Valid runs</th><th>Median output tokens / run</th>
+<th>Max output tokens / run</th><th>Median model calls / run</th>
+<th>Mean output tokens / call</th><th>Runs truncated by output cap</th></tr>
 {% for d in study.condition_diagnostics %}
 <tr>
   <td>{{ d.condition_id }}</td><td>{{ d.n }}</td>
   <td>{{ '{:,}'.format(d.median_output_tokens) }}</td>
   <td>{{ '{:,}'.format(d.max_output_tokens) }}</td>
+  <td>{{ d.median_model_calls }}</td>
+  <td>{{ '{:,}'.format(d.mean_output_tokens_per_call) }}</td>
   <td class="{{ 'fail' if d.truncated_runs else '' }}">{{ d.truncated_runs }}</td>
 </tr>
 {% endfor %}

@@ -26,6 +26,7 @@ import shutil
 from dataclasses import dataclass
 from pathlib import Path
 
+from squelch.analysis.diagnostics import condition_diagnostics
 from squelch.runner.stage import TRUNCATION_STOP_REASONS
 from squelch.schemas import RunResult, RunStatus, TerminationReason
 
@@ -182,7 +183,7 @@ def _rebuild_summary(source_summary: dict, dest_dir: Path,
     by_id = {r.run_id: r for r in results}
     cells: dict[tuple[str, str], dict] = {}
     status_counts: dict[str, int] = {}
-    diag: dict[str, dict] = {}
+    valid_pairs: list[tuple[str, RunResult]] = []
     for run_dir in sorted((dest_dir / "runs").iterdir()):
         spec_file = run_dir / "run_spec.json"
         if not spec_file.is_file():
@@ -201,20 +202,9 @@ def _rebuild_summary(source_summary: dict, dest_dir: Path,
             cell["valid_n"] += 1
             if r.task_success:
                 cell["successes"] += 1
-            d = diag.setdefault(key[1], {"condition_id": key[1], "output_tokens": [],
-                                         "n": 0, "truncated": 0})
-            d["n"] += 1
-            d["output_tokens"].append(r.usage.output_tokens)
-            if r.termination_reason is TerminationReason.OUTPUT_TOKEN_LIMIT:
-                d["truncated"] += 1
+        valid_pairs.append((key[1], r))
 
-    diagnostics = []
-    for d in sorted(diag.values(), key=lambda x: x["condition_id"]):
-        toks = sorted(d["output_tokens"])
-        diagnostics.append({"condition_id": d["condition_id"], "n": d["n"],
-                            "median_output_tokens": toks[len(toks) // 2] if toks else 0,
-                            "max_output_tokens": max(toks) if toks else 0,
-                            "truncated_runs": d["truncated"]})
+    diagnostics = condition_diagnostics(valid_pairs)
 
     summary = dict(source_summary)
     summary.update({
