@@ -1,3 +1,7 @@
+---
+sidebar_label: Week 1 report
+---
+
 # Week 01 — a lab, a live pilot, and two failed exit criteria
 
 **Phase:** 1 (instrumented laboratory)
@@ -107,21 +111,33 @@ pair provoked. A 0/3 cell carries a Wilson interval reaching past 0.5.
 
 ## 7. One real signal, and it is a confound
 
-Output length rises with the number of instructions loaded:
+Loading skills changes how much the model writes. Output tokens per run are a
+**total across all of that run's model calls**, so the table also separates how
+many calls a run makes from how long each response is:
 
-| Condition | Median output tokens | Max | Runs truncated by the cap |
-|---|---|---|---|
-| none | 1,533 | 1,900 | 0/12 |
-| b | 1,535 | 2,685 | 0/12 |
-| a | 1,772 | 2,706 | 1/12 |
-| ab | 2,188 | 3,018 | 1/12 |
+| Condition | Median output tokens / run | Median model calls / run | Mean output tokens / call | Runs truncated by the cap |
+|---|---|---|---|---|
+| none | 1,511 | 2.0 | 574 | 0/12 |
+| b | 1,530 | 3.0 | 537 | 0/12 |
+| a | 1,648 | 2.5 | 677 | 1/12 |
+| ab | 2,020 | 3.0 | 718 | 1/12 |
 
-The pair produces ~43% more output than the baseline against a fixed cap. A
-condition can therefore fail by running into the ceiling rather than by
-reasoning worse. This is exactly the length confound the spec's
-length-matched control arm exists to separate, and Phase 1 does **not**
-separate it. The report now prints this table beside every success rate so
-the confound cannot be overlooked.
+The pair writes about a third more per run than the baseline (2,020 vs 1,511,
++34%). That comes from **both** more calls (median 3 vs 2) **and** longer
+responses (718 vs 574 tokens per call, about +25%). The longer responses track
+skill A, the modernize skill (677 per call on its own), and **both truncations
+happened in conditions that include it**.
+
+A condition can therefore fail by running into the output cap rather than by
+reasoning worse. This is exactly the length confound the spec's length-matched
+control arm exists to separate, and Phase 1 does **not** separate it. The
+report prints this table beside every success rate so the confound cannot be
+overlooked.
+
+*Correction.* An earlier version of this report quoted "+43%" (2,188 vs 1,533).
+That figure came from a bug in the summary code, which took the upper middle
+element instead of the true median for an even sample, and it compared a
+per-run total to a per-call cap. Both are fixed and covered by tests.
 
 ## 8. The surprise: the instrument was wrong
 
@@ -159,8 +175,12 @@ re-derivation is exact.
 
 ## 10. Operational finding
 
-The binding constraint is **wall clock, not money**. Measured: ~61 s and
-~3,300 tokens per run, $0.00. A 48-run grid is about an hour.
+The binding constraint is **wall clock, not money**. Measured over the 48
+pilot runs: median 94 s and mean 223 s per run (about 3 hours in total, with a
+long tail of slow runs whose cause was not isolated; memory pressure is one
+candidate), ~1,700 input and ~1,640 output tokens per run, $0.00. A healthier
+stretch of the second attempt averaged ~61 s per run, so the spread is real:
+plan for hours, not minutes, and free the RAM first.
 
 That holds only while the model fits in memory. A re-run was abandoned when
 the host dropped to 436 MB free with 5.7 GB of swap in use: single model calls
@@ -204,9 +224,8 @@ so one very slow call runs past it. Recorded, not yet fixed.
 >
 > Two other things showed up. Three of my four tasks were so easy that
 > everything passed them, so they could never have revealed anything. And
-> loading both skills made the model 43% more verbose against a fixed output
-> cap — which means length and content varied together, and I can't yet tell
-> them apart.
+> loading both skills made the model write about a third more per run — which
+> means length and content varied together, and I can't yet tell them apart.
 >
 > No finding. A working lab, a fixed bug, and a much better idea of what to
 > measure next.

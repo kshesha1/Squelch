@@ -1,0 +1,109 @@
+{
+  "artifact_hashes": {
+    "diff_patch": "sha256:92534b63032cd9d1b8d8a8b2613133d3763a05f4a3b16fbf12c14b0ed162b024",
+    "evaluated_outputs": "sha256:5c91a961f465e80a5891d6be87bc8b0c828c6e25d83d989c77301ab3aba8c1d8",
+    "final_workspace": "sha256:5c91a961f465e80a5891d6be87bc8b0c828c6e25d83d989c77301ab3aba8c1d8",
+    "run_spec": "sha256:b234cd2c111fbaaea80f77f232d30b49cdffb6a02a6c894b6f6fa8d08b038fbd"
+  },
+  "assertions": [
+    {
+      "assertion_id": "module-imports",
+      "detail": "",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "valid-basic",
+      "detail": "got [1, 2, 3]",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "valid-whitespace",
+      "detail": "got [4, 5]",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "valid-negative",
+      "detail": "got [-7]",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "none-input",
+      "detail": "got []",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "empty-string",
+      "detail": "got []",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "whitespace-only",
+      "detail": "got []",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "bad-tokens-skipped",
+      "detail": "got [1, 3]",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "all-bad-tokens",
+      "detail": "got []",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "only-parse-py",
+      "detail": "files: ['parse.py']",
+      "mandatory": true,
+      "passed": true
+    }
+  ],
+  "changed_files": [
+    "M parse.py"
+  ],
+  "error": null,
+  "finished_at": "2026-09-17T01:07:52.166803Z",
+  "metrics": {},
+  "run_id": "pilot-001-r0039",
+  "schema_version": "1",
+  "spend_status": "free_local",
+  "spend_usd": 0.0,
+  "stage_results": [
+    {
+      "exposed_skill_ids": [],
+      "handoff_produced": false,
+      "model_calls": 2,
+      "schema_version": "1",
+      "stage_id": "implement",
+      "termination_reason": "final_response",
+      "tool_calls": 1,
+      "usage": {
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0,
+        "input_tokens": 1096,
+        "output_tokens": 1785
+      },
+      "worker_id": "worker-1"
+    }
+  ],
+  "started_at": "2026-09-17T01:06:12.164425Z",
+  "status": "completed",
+  "task_success": true,
+  "termination_reason": "final_response",
+  "trace_path": ".squelch/studies/pilot-001/runs/pilot-001-r0039/events.jsonl",
+  "usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "input_tokens": 1096,
+    "output_tokens": 1785
+  }
+}

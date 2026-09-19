@@ -1,0 +1,97 @@
+{
+  "backend": "ollama",
+  "campaign": "aa-trial",
+  "cells": [
+    {
+      "condition_id": "aa1",
+      "n": 3,
+      "runs": [
+        "aa-001-r0008",
+        "aa-001-r0010",
+        "aa-001-r0012"
+      ],
+      "successes": 3,
+      "task_id": "api-migration",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "aa2",
+      "n": 3,
+      "runs": [
+        "aa-001-r0007",
+        "aa-001-r0009",
+        "aa-001-r0011"
+      ],
+      "successes": 3,
+      "task_id": "api-migration",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "aa1",
+      "n": 3,
+      "runs": [
+        "aa-001-r0001",
+        "aa-001-r0003",
+        "aa-001-r0006"
+      ],
+      "successes": 3,
+      "task_id": "python-repair",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "aa2",
+      "n": 3,
+      "runs": [
+        "aa-001-r0002",
+        "aa-001-r0004",
+        "aa-001-r0005"
+      ],
+      "successes": 3,
+      "task_id": "python-repair",
+      "valid_n": 3
+    }
+  ],
+  "condition_diagnostics": [
+    {
+      "condition_id": "aa1",
+      "max_output_tokens": 1707,
+      "median_output_tokens": 1495,
+      "n": 6,
+      "truncated_runs": 0
+    },
+    {
+      "condition_id": "aa2",
+      "max_output_tokens": 1980,
+      "median_output_tokens": 1570,
+      "n": 6,
+      "truncated_runs": 0
+    }
+  ],
+  "config_hash": "sha256:e0572945df46c2f9759de3ec9a28c6e252c158bdf3ad8dbcf5b606c0775a5ebd",
+  "constructed_fixtures": [],
+  "disclosure": "Screening evidence from local inference on the Squelch runner: descriptive effects, small N, no confirmation claim. Fixtures are authored controls; results describe this runner and model only.",
+  "environment": "local:python-3.13.14:darwin",
+  "evidence_stage": "screening",
+  "fixture_provenance": [
+    {
+      "package_hash": "sha256:2add045104fa4c14bd2d1f214f64d246566e82158cb064c5d0bc67ef5dc9f202",
+      "provenance": "undeclared",
+      "skill_id": "minimal-change"
+    }
+  ],
+  "generated_at": "2026-09-17T15:23:24.473226+00:00",
+  "model_id": "qwen3:8b",
+  "preregistration_hash": "sha256:2069c94cfda3e0e965b176fb63872db847e42b9fd55f34d1cbe2bb03ad75b775",
+  "reused_runs": 0,
+  "runner_version": "0.1.0a0",
+  "schema_version": "1",
+  "spend_usd": 0.0,
+  "status_counts": {
+    "completed": 12
+  },
+  "total_runs": 12,
+  "usage_totals": {
+    "input_tokens": 22768,
+    "output_tokens": 18137
+  }
+}

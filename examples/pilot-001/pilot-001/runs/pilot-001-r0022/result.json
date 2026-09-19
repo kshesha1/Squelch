@@ -1,0 +1,100 @@
+{
+  "artifact_hashes": {
+    "diff_patch": "sha256:58432670c6f2c14defd0d9515220212dc9018608cc13ba00e474888ff01694c4",
+    "evaluated_outputs": "sha256:15db49ad61fb5f44d64f45c21b5f7cce3e25f2f61a40a33e1935e848f44b7682",
+    "final_workspace": "sha256:15db49ad61fb5f44d64f45c21b5f7cce3e25f2f61a40a33e1935e848f44b7682",
+    "run_spec": "sha256:7588ce93237a58cc13728e021375ba04b187403bdc3443d6db2fbc2995886aba"
+  },
+  "assertions": [
+    {
+      "assertion_id": "module-imports",
+      "detail": "",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "low-endpoint-included",
+      "detail": "in_range(1,1,10)=True",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "high-endpoint-included",
+      "detail": "in_range(10,1,10)=True",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "interior-true",
+      "detail": "",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "below-false",
+      "detail": "",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "above-false",
+      "detail": "",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "degenerate-range",
+      "detail": "in_range(3,3,3)=True",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "only-ranges-py",
+      "detail": "files: ['ranges.py']",
+      "mandatory": true,
+      "passed": true
+    }
+  ],
+  "changed_files": [
+    "M ranges.py"
+  ],
+  "error": null,
+  "finished_at": "2026-09-16T22:57:05.739688Z",
+  "metrics": {},
+  "run_id": "pilot-001-r0022",
+  "schema_version": "1",
+  "spend_status": "free_local",
+  "spend_usd": 0.0,
+  "stage_results": [
+    {
+      "exposed_skill_ids": [
+        "modernize-thoroughly",
+        "minimal-change"
+      ],
+      "handoff_produced": false,
+      "model_calls": 3,
+      "schema_version": "1",
+      "stage_id": "implement",
+      "termination_reason": "final_response",
+      "tool_calls": 2,
+      "usage": {
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0,
+        "input_tokens": 2246,
+        "output_tokens": 2759
+      },
+      "worker_id": "worker-1"
+    }
+  ],
+  "started_at": "2026-09-16T22:54:28.832460Z",
+  "status": "completed",
+  "task_success": true,
+  "termination_reason": "final_response",
+  "trace_path": ".squelch/studies/pilot-001/runs/pilot-001-r0022/events.jsonl",
+  "usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "input_tokens": 2246,
+    "output_tokens": 2759
+  }
+}

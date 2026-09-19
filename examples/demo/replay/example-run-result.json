@@ -2,8 +2,8 @@
   "artifact_hashes": {
     "diff_patch": "sha256:58432670c6f2c14defd0d9515220212dc9018608cc13ba00e474888ff01694c4",
     "evaluated_outputs": "sha256:15db49ad61fb5f44d64f45c21b5f7cce3e25f2f61a40a33e1935e848f44b7682",
-    "final_workspace": "sha256:15db49ad61fb5f44d64f45c21b5f7cce3e25f2f61a40a33e1935e848f44b7682",
-    "run_spec": "sha256:ee247040ab9a41a7254175666a0231e7a8f77148beeed8c801f6d77cfb8893f4"
+    "final_workspace": "sha256:91f0eb27ee5e7007ed7e09c96f82c03b9b1ea171c2c599f7ad29c85bed1073a0",
+    "run_spec": "sha256:78bd0228653e11ba6ebddbc02d21d7c001f153dc456efb74acf7f997751a8a5f"
   },
   "assertions": [
     {
@@ -59,7 +59,7 @@
     "M ranges.py"
   ],
   "error": null,
-  "finished_at": "2026-09-17T14:38:39.573297Z",
+  "finished_at": "2026-09-19T04:39:47.318554Z",
   "metrics": {},
   "run_id": "conflict-demo-r0003",
   "schema_version": "1",
@@ -83,7 +83,7 @@
       "worker_id": "worker-1"
     }
   ],
-  "started_at": "2026-09-17T14:38:39.548155Z",
+  "started_at": "2026-09-19T04:39:47.299214Z",
   "status": "completed",
   "task_success": true,
   "termination_reason": "final_response",

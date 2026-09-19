@@ -1,0 +1,99 @@
+{
+  "artifact_hashes": {
+    "diff_patch": "sha256:64ff7c3901fae036538c88e1bbd84e7238658172a7d9407569efcfe52741edc2",
+    "evaluated_outputs": "sha256:ebb99db01cef9e9379b0e9303d80f9e414ac4afeff1bee85ebdaabc0ee912298",
+    "final_workspace": "sha256:ebb99db01cef9e9379b0e9303d80f9e414ac4afeff1bee85ebdaabc0ee912298",
+    "run_spec": "sha256:55b3046c0ec4b28ae3d9e61c40735e43d1b250022f34aac1808c7c81f02538a5"
+  },
+  "assertions": [
+    {
+      "assertion_id": "config-exists",
+      "detail": "",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "config-parses",
+      "detail": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+      "mandatory": true,
+      "passed": false
+    },
+    {
+      "assertion_id": "keys-exact",
+      "detail": "config.json is not a JSON object",
+      "mandatory": true,
+      "passed": false
+    },
+    {
+      "assertion_id": "name-valid",
+      "detail": "config.json is not a JSON object",
+      "mandatory": true,
+      "passed": false
+    },
+    {
+      "assertion_id": "port-valid",
+      "detail": "config.json is not a JSON object",
+      "mandatory": true,
+      "passed": false
+    },
+    {
+      "assertion_id": "debug-valid",
+      "detail": "config.json is not a JSON object",
+      "mandatory": true,
+      "passed": false
+    },
+    {
+      "assertion_id": "no-unrelated-files",
+      "detail": "files present: ['README.txt', 'config.json']",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "readme-unchanged",
+      "detail": "",
+      "mandatory": true,
+      "passed": true
+    }
+  ],
+  "changed_files": [
+    "A config.json"
+  ],
+  "error": null,
+  "finished_at": "2026-09-16T22:37:32.563684Z",
+  "metrics": {},
+  "run_id": "pilot-001-r0011",
+  "schema_version": "1",
+  "spend_status": "free_local",
+  "spend_usd": 0.0,
+  "stage_results": [
+    {
+      "exposed_skill_ids": [
+        "minimal-change"
+      ],
+      "handoff_produced": false,
+      "model_calls": 3,
+      "schema_version": "1",
+      "stage_id": "implement",
+      "termination_reason": "final_response",
+      "tool_calls": 2,
+      "usage": {
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0,
+        "input_tokens": 1637,
+        "output_tokens": 1239
+      },
+      "worker_id": "worker-1"
+    }
+  ],
+  "started_at": "2026-09-16T22:36:23.922003Z",
+  "status": "completed",
+  "task_success": false,
+  "termination_reason": "final_response",
+  "trace_path": ".squelch/studies/pilot-001/runs/pilot-001-r0011/events.jsonl",
+  "usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "input_tokens": 1637,
+    "output_tokens": 1239
+  }
+}

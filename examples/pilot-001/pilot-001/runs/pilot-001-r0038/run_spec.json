@@ -1,0 +1,84 @@
+{
+  "collection": {
+    "composition_policy": "shared",
+    "loading_mode": "forced",
+    "ordered_skill_hashes": [
+      "sha256:f45f67ef7f30764885533923f5cdd7e197d494d44c2789c798bdeed0105fe3b3",
+      "sha256:2add045104fa4c14bd2d1f214f64d246566e82158cb064c5d0bc67ef5dc9f202"
+    ],
+    "policy_hash": "sha256:f1de60eb41aa2f55d39cc00adf2bad99ad64d4023ee62df355471b2ee22a73ea",
+    "runner_version": "0.1.0a0",
+    "schema_version": "1",
+    "system_prompt_hash": "sha256:19381e5d767f4294616efc5fa4aa4e697acfa96c34476ba70b16edf4557b1bf4",
+    "tool_schema_hash": "sha256:3fbe9b770d2f70b085fb5eff329e2dce44c8d1e358a5e9348f0d870f8d179d0d"
+  },
+  "condition_id": "ab",
+  "created_at": "2026-09-16T22:26:42.889469Z",
+  "model": {
+    "cost_unknown": false,
+    "parameters": {
+      "host": "http://localhost:11434",
+      "seed": null,
+      "temperature": 0.2
+    },
+    "pricing_reference": "local_inference_zero_marginal_cost",
+    "provider": "ollama",
+    "reported_model_id": null,
+    "requested_model_id": "qwen3:8b",
+    "schema_version": "1",
+    "sdk_version": null
+  },
+  "repetition": 1,
+  "run_id": "pilot-001-r0038",
+  "schedule_seed": 42,
+  "schema_version": "1",
+  "stage_plan": [
+    {
+      "exposed_skill_ids": [
+        "modernize-thoroughly",
+        "minimal-change"
+      ],
+      "limits": {
+        "max_file_bytes": 262144,
+        "max_model_calls": 12,
+        "max_output_tokens": 2048,
+        "max_tool_calls": 30,
+        "task_timeout_seconds": 600
+      },
+      "stage_id": "implement"
+    }
+  ],
+  "study_id": "pilot-001",
+  "task": {
+    "allowed_outputs": [
+      "parse.py"
+    ],
+    "checks": [
+      {
+        "check_id": "smoke",
+        "cmd": [
+          "python",
+          "-c",
+          "import parse; print(parse.parse_int_list('1, 2,3'))"
+        ],
+        "public": true,
+        "timeout_seconds": 60
+      }
+    ],
+    "environment_image": "local:python-3.13.14:darwin",
+    "family_id": "robust-input-handling",
+    "grader_hash": "sha256:0580fd8fef3fe80615db8f906dfb79edba248b3e60df09a9f933c704f04f20ff",
+    "limits": {
+      "max_file_bytes": 262144,
+      "max_model_calls": 12,
+      "max_output_tokens": 2048,
+      "max_tool_calls": 30,
+      "task_timeout_seconds": 180
+    },
+    "prompt_hash": "sha256:34d8e9509c5a5a04b028f2b98ebb8cf46db6e47b7333405867b17693a53d873c",
+    "schema_version": "1",
+    "split": "development",
+    "starter_tree_hash": "sha256:15a9e854f1d58044e65c143c22e7d556018199914fdefb1b3017d321f5591143",
+    "task_id": "robust-input"
+  }
+}

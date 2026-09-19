@@ -1,0 +1,286 @@
+{
+  "analysis_version": "replay/1",
+  "backend": "ollama",
+  "campaign": "conflict-pilot (re-analyzed)",
+  "cells": [
+    {
+      "condition_id": "a",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0026",
+        "pilot-001-r0029",
+        "pilot-001-r0035"
+      ],
+      "successes": 3,
+      "task_id": "api-migration",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "ab",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0028",
+        "pilot-001-r0030",
+        "pilot-001-r0036"
+      ],
+      "successes": 3,
+      "task_id": "api-migration",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "b",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0025",
+        "pilot-001-r0032",
+        "pilot-001-r0034"
+      ],
+      "successes": 3,
+      "task_id": "api-migration",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "none",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0027",
+        "pilot-001-r0031",
+        "pilot-001-r0033"
+      ],
+      "successes": 1,
+      "task_id": "api-migration",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "a",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0002",
+        "pilot-001-r0008",
+        "pilot-001-r0009"
+      ],
+      "successes": 3,
+      "task_id": "json-config",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "ab",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0003",
+        "pilot-001-r0005",
+        "pilot-001-r0010"
+      ],
+      "successes": 3,
+      "task_id": "json-config",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "b",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0001",
+        "pilot-001-r0006",
+        "pilot-001-r0011"
+      ],
+      "successes": 2,
+      "task_id": "json-config",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "none",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0004",
+        "pilot-001-r0007",
+        "pilot-001-r0012"
+      ],
+      "successes": 3,
+      "task_id": "json-config",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "a",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0013",
+        "pilot-001-r0017",
+        "pilot-001-r0021"
+      ],
+      "successes": 2,
+      "task_id": "python-repair",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "ab",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0016",
+        "pilot-001-r0019",
+        "pilot-001-r0022"
+      ],
+      "successes": 3,
+      "task_id": "python-repair",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "b",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0014",
+        "pilot-001-r0018",
+        "pilot-001-r0023"
+      ],
+      "successes": 3,
+      "task_id": "python-repair",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "none",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0015",
+        "pilot-001-r0020",
+        "pilot-001-r0024"
+      ],
+      "successes": 3,
+      "task_id": "python-repair",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "a",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0040",
+        "pilot-001-r0042",
+        "pilot-001-r0047"
+      ],
+      "successes": 3,
+      "task_id": "robust-input",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "ab",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0038",
+        "pilot-001-r0043",
+        "pilot-001-r0045"
+      ],
+      "successes": 0,
+      "task_id": "robust-input",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "b",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0037",
+        "pilot-001-r0041",
+        "pilot-001-r0046"
+      ],
+      "successes": 3,
+      "task_id": "robust-input",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "none",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0039",
+        "pilot-001-r0044",
+        "pilot-001-r0048"
+      ],
+      "successes": 3,
+      "task_id": "robust-input",
+      "valid_n": 3
+    }
+  ],
+  "condition_diagnostics": [
+    {
+      "condition_id": "a",
+      "max_output_tokens": 2706,
+      "mean_output_tokens_per_call": 677,
+      "median_model_calls": 2.5,
+      "median_output_tokens": 1648,
+      "n": 12,
+      "truncated_runs": 1
+    },
+    {
+      "condition_id": "ab",
+      "max_output_tokens": 3018,
+      "mean_output_tokens_per_call": 718,
+      "median_model_calls": 3.0,
+      "median_output_tokens": 2020,
+      "n": 12,
+      "truncated_runs": 1
+    },
+    {
+      "condition_id": "b",
+      "max_output_tokens": 2685,
+      "mean_output_tokens_per_call": 537,
+      "median_model_calls": 3.0,
+      "median_output_tokens": 1530,
+      "n": 12,
+      "truncated_runs": 0
+    },
+    {
+      "condition_id": "none",
+      "max_output_tokens": 1900,
+      "mean_output_tokens_per_call": 574,
+      "median_model_calls": 2.0,
+      "median_output_tokens": 1511,
+      "n": 12,
+      "truncated_runs": 0
+    }
+  ],
+  "config_hash": "sha256:574738c4ff1dd5753c8be9a8b1ba4244b052932b0ecf94106125ccea90d6bbee",
+  "derived_from": "conflict-pilot",
+  "disclosure": "Screening evidence from local inference on the Squelch runner: descriptive effects, small N, no confirmation claim. Fixtures are authored controls; results describe this runner and model only. RE-ANALYSIS (replay/1): classifications were re-derived offline from the recorded events of the original study. No model was called and no agent was re-executed; grading is unchanged. 2 run(s) changed classification.",
+  "environment": "local:python-3.13.14:darwin",
+  "evidence_stage": "screening",
+  "generated_at": "2026-09-17T01:25:02.762335+00:00",
+  "model_id": "qwen3:8b",
+  "preregistration_hash": "sha256:2069c94cfda3e0e965b176fb63872db847e42b9fd55f34d1cbe2bb03ad75b775",
+  "reclassified_runs": [
+    {
+      "now": {
+        "status": "agent_limit",
+        "task_success": false,
+        "termination_reason": "output_token_limit"
+      },
+      "run_id": "pilot-001-r0021",
+      "was": {
+        "status": "completed",
+        "task_success": false,
+        "termination_reason": "final_response"
+      }
+    },
+    {
+      "now": {
+        "status": "agent_limit",
+        "task_success": false,
+        "termination_reason": "output_token_limit"
+      },
+      "run_id": "pilot-001-r0038",
+      "was": {
+        "status": "completed",
+        "task_success": false,
+        "termination_reason": "final_response"
+      }
+    }
+  ],
+  "reused_runs": 0,
+  "runner_version": "0.1.0a0",
+  "schema_version": "1",
+  "spend_usd": 0.0,
+  "status_counts": {
+    "agent_limit": 2,
+    "completed": 46
+  },
+  "total_runs": 48,
+  "usage_totals": {
+    "input_tokens": 81624,
+    "output_tokens": 78871
+  }
+}

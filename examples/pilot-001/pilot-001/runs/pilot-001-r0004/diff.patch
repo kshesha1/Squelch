@@ -1,0 +1,4 @@
+--- starter/config.json
++++ workspace/config.json
+@@ -0,0 +1 @@
++{"name": "myapp", "port": 3000, "debug": false}

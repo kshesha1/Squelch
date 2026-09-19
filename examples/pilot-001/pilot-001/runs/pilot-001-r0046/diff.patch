@@ -1,0 +1,16 @@
+--- starter/parse.py
++++ workspace/parse.py
+@@ -1,3 +1,12 @@
+ def parse_int_list(s):
+     """Parse a comma-separated string of integers into a list."""
+-    return [int(token.strip()) for token in s.split(",")]
++    if s is None or s.strip() == '':
++        return []
++    result = []
++    for token in s.split(','): 
++        stripped = token.strip()
++        try:
++            result.append(int(stripped))
++        except ValueError:
++            pass
++    return result

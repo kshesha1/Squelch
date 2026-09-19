@@ -1,0 +1,85 @@
+{
+  "collection": {
+    "composition_policy": "shared",
+    "loading_mode": "forced",
+    "ordered_skill_hashes": [
+      "sha256:f45f67ef7f30764885533923f5cdd7e197d494d44c2789c798bdeed0105fe3b3",
+      "sha256:2add045104fa4c14bd2d1f214f64d246566e82158cb064c5d0bc67ef5dc9f202"
+    ],
+    "policy_hash": "sha256:f1de60eb41aa2f55d39cc00adf2bad99ad64d4023ee62df355471b2ee22a73ea",
+    "runner_version": "0.1.0a0",
+    "schema_version": "1",
+    "system_prompt_hash": "sha256:19381e5d767f4294616efc5fa4aa4e697acfa96c34476ba70b16edf4557b1bf4",
+    "tool_schema_hash": "sha256:3fbe9b770d2f70b085fb5eff329e2dce44c8d1e358a5e9348f0d870f8d179d0d"
+  },
+  "condition_id": "ab",
+  "created_at": "2026-09-16T22:26:42.889238Z",
+  "model": {
+    "cost_unknown": false,
+    "parameters": {
+      "host": "http://localhost:11434",
+      "seed": null,
+      "temperature": 0.2
+    },
+    "pricing_reference": "local_inference_zero_marginal_cost",
+    "provider": "ollama",
+    "reported_model_id": null,
+    "requested_model_id": "qwen3:8b",
+    "schema_version": "1",
+    "sdk_version": null
+  },
+  "repetition": 1,
+  "run_id": "pilot-001-r0003",
+  "schedule_seed": 42,
+  "schema_version": "1",
+  "stage_plan": [
+    {
+      "exposed_skill_ids": [
+        "modernize-thoroughly",
+        "minimal-change"
+      ],
+      "limits": {
+        "max_file_bytes": 262144,
+        "max_model_calls": 12,
+        "max_output_tokens": 2048,
+        "max_tool_calls": 30,
+        "task_timeout_seconds": 600
+      },
+      "stage_id": "implement"
+    }
+  ],
+  "study_id": "pilot-001",
+  "task": {
+    "allowed_outputs": [
+      "*",
+      "**/*"
+    ],
+    "checks": [
+      {
+        "check_id": "json-parse",
+        "cmd": [
+          "python",
+          "-c",
+          "import json; json.load(open('config.json')); print('parseable')"
+        ],
+        "public": true,
+        "timeout_seconds": 60
+      }
+    ],
+    "environment_image": "local:python-3.13.14:darwin",
+    "family_id": "json-configuration",
+    "grader_hash": "sha256:97e5a6ad81092aea66167074277846292cba5c4d6ae000a85de7a0d091da2258",
+    "limits": {
+      "max_file_bytes": 262144,
+      "max_model_calls": 12,
+      "max_output_tokens": 2048,
+      "max_tool_calls": 30,
+      "task_timeout_seconds": 180
+    },
+    "prompt_hash": "sha256:bf7900cfe49a70b638dbe9f4c9da07efe01623396253ad4d90b94335042a3acd",
+    "schema_version": "1",
+    "split": "development",
+    "starter_tree_hash": "sha256:859647f315e09d4d2db6efb0897c7ab2a1c582128c2b0bd93c254dd43ce76493",
+    "task_id": "json-config"
+  }
+}

@@ -1,0 +1,9 @@
+--- starter/app.py
++++ workspace/app.py
+@@ -3,5 +3,5 @@
+ 
+ def load_status(url):
+     """Return the service status string for a URL."""
+-    response = toylib.get(url, 5)  # toylib 2.0 removed get()
++    response = toylib.fetch(url, timeout=5)
+     return response["status"]

@@ -8,7 +8,7 @@
       "id": "w01-pooled-rates",
       "claim": "p(none)=0.83, p(a)=0.92, p(b)=0.92, p(ab)=0.75 pooled over 4 tasks, 12 valid runs per condition",
       "source_study": "pilot-001-reanalyzed",
-      "artifact": ".squelch/studies/pilot-001-reanalyzed/study.json",
+      "artifact": "examples/pilot-001/pilot-001-reanalyzed/study.json",
       "evidence_stage": "screening",
       "supports_conclusion": false,
       "why": "All Wilson 95% intervals overlap; compatible with no effect."
@@ -17,7 +17,7 @@
       "id": "w01-contrasts",
       "claim": "pair_vs_A = -0.167, pair_vs_B = -0.167, additive_interaction = -0.250",
       "source_study": "pilot-001-reanalyzed",
-      "artifact": ".squelch/studies/pilot-001-reanalyzed/study.json",
+      "artifact": "examples/pilot-001/pilot-001-reanalyzed/study.json",
       "evidence_stage": "screening",
       "supports_conclusion": false,
       "why": "Direction matches H1 but intervals overlap; descriptive only."
@@ -26,43 +26,43 @@
       "id": "w01-robust-input-cell",
       "claim": "robust-input: none 3/3, a 3/3, b 3/3, ab 0/3",
       "source_study": "pilot-001-reanalyzed",
-      "artifact": ".squelch/studies/pilot-001-reanalyzed/study.json",
+      "artifact": "examples/pilot-001/pilot-001-reanalyzed/study.json",
       "evidence_stage": "screening",
       "supports_conclusion": false,
       "why": "Three failures had three unrelated causes (truncation, escape-sequence bug, docstring typo); n=3 interval reaches past 0.5."
     },
     {
       "id": "w01-verbosity",
-      "claim": "Median output tokens: none 1533, b 1535, a 1772, ab 2188 (~43% above baseline for the pair)",
+      "claim": "Median output tokens per run: none 1511, b 1530, a 1648, ab 2020 (+34% for the pair). Median model calls per run: 2.0 / 3.0 / 2.5 / 3.0. Mean output tokens per call: 574 / 537 / 677 / 718. Both truncated runs were in conditions containing the modernize skill.",
       "source_study": "pilot-001-reanalyzed",
-      "artifact": ".squelch/studies/pilot-001-reanalyzed/study.json#condition_diagnostics",
+      "artifact": "examples/pilot-001/pilot-001-reanalyzed/study.json#condition_diagnostics",
       "evidence_stage": "screening",
       "supports_conclusion": "confound_only",
-      "why": "Establishes that length and content vary together; does not establish an instruction effect."
+      "why": "Establishes that length and content vary together (more calls and longer responses); does not establish an instruction effect. Supersedes an earlier '+43%' figure caused by an upper-median bug and a per-run vs per-call comparison."
     },
     {
       "id": "w01-reclassification",
       "claim": "2 of 48 runs reclassified from completed/final_response to agent_limit/output_token_limit",
       "source_study": "pilot-001-reanalyzed",
-      "artifact": ".squelch/studies/pilot-001-reanalyzed/study.json#reclassified_runs",
+      "artifact": "examples/pilot-001/pilot-001-reanalyzed/study.json#reclassified_runs",
       "evidence_stage": "screening",
       "supports_conclusion": true,
       "why": "Re-derived offline from recorded stop_reason events; zero truncated-with-tools cases, so re-derivation is exact."
     },
     {
       "id": "w01-cost",
-      "claim": "~61 s, ~1700 input and ~1640 output tokens per run, $0.00",
+      "claim": "Median 94 s and mean 223 s per run (about 3 hours for 48 runs); ~1700 input and ~1640 output tokens per run; $0.00",
       "source_study": "pilot-001",
-      "artifact": ".squelch/studies/pilot-001/study.json#usage_totals",
+      "artifact": "examples/pilot-001/pilot-001/runs/*/result.json (started_at, finished_at, usage)",
       "evidence_stage": "screening",
       "supports_conclusion": true,
-      "why": "Directly measured over 48 runs; local inference has zero marginal cost."
+      "why": "Directly measured over 48 runs; local inference has zero marginal cost. Supersedes an earlier '~61 s' figure taken from a faster stretch of a later attempt."
     },
     {
       "id": "w01-baseline-ceiling",
       "claim": "3 of 4 task families have a no-skill baseline of 1.00 on qwen3:8b",
       "source_study": "pilot-001-reanalyzed",
-      "artifact": ".squelch/studies/pilot-001-reanalyzed/study.json#cells",
+      "artifact": "examples/pilot-001/pilot-001-reanalyzed/study.json#cells",
       "evidence_stage": "screening",
       "supports_conclusion": true,
       "why": "Preregistered H2 calibration check; failed, so those tasks are uninformative for composition."

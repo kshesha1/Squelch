@@ -1,0 +1,110 @@
+{
+  "artifact_hashes": {
+    "diff_patch": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evaluated_outputs": "sha256:15a9e854f1d58044e65c143c22e7d556018199914fdefb1b3017d321f5591143",
+    "final_workspace": "sha256:15a9e854f1d58044e65c143c22e7d556018199914fdefb1b3017d321f5591143",
+    "run_spec": "sha256:371c55ecb7ea5e66e7bd84ee56b6a94b296f32058cab747bc2c3ebb55a02066c"
+  },
+  "assertions": [
+    {
+      "assertion_id": "module-imports",
+      "detail": "",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "valid-basic",
+      "detail": "got [1, 2, 3]",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "valid-whitespace",
+      "detail": "got [4, 5]",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "valid-negative",
+      "detail": "got [-7]",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "none-input",
+      "detail": "got 'raised AttributeError(\"\\'NoneType\\' object has no attribute \\'split\\'\")'",
+      "mandatory": true,
+      "passed": false
+    },
+    {
+      "assertion_id": "empty-string",
+      "detail": "got 'raised ValueError(\"invalid literal for int() with base 10: \\'\\'\")'",
+      "mandatory": true,
+      "passed": false
+    },
+    {
+      "assertion_id": "whitespace-only",
+      "detail": "got 'raised ValueError(\"invalid literal for int() with base 10: \\'\\'\")'",
+      "mandatory": true,
+      "passed": false
+    },
+    {
+      "assertion_id": "bad-tokens-skipped",
+      "detail": "got 'raised ValueError(\"invalid literal for int() with base 10: \\'x\\'\")'",
+      "mandatory": true,
+      "passed": false
+    },
+    {
+      "assertion_id": "all-bad-tokens",
+      "detail": "got 'raised ValueError(\"invalid literal for int() with base 10: \\'a\\'\")'",
+      "mandatory": true,
+      "passed": false
+    },
+    {
+      "assertion_id": "only-parse-py",
+      "detail": "files: ['parse.py']",
+      "mandatory": true,
+      "passed": true
+    }
+  ],
+  "changed_files": [],
+  "error": null,
+  "finished_at": "2026-09-17T01:06:12.163398Z",
+  "metrics": {},
+  "run_id": "pilot-001-r0038",
+  "schema_version": "1",
+  "spend_status": "free_local",
+  "spend_usd": 0.0,
+  "stage_results": [
+    {
+      "exposed_skill_ids": [
+        "modernize-thoroughly",
+        "minimal-change"
+      ],
+      "handoff_produced": false,
+      "model_calls": 2,
+      "schema_version": "1",
+      "stage_id": "implement",
+      "termination_reason": "final_response",
+      "tool_calls": 1,
+      "usage": {
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0,
+        "input_tokens": 1575,
+        "output_tokens": 2929
+      },
+      "worker_id": "worker-1"
+    }
+  ],
+  "started_at": "2026-09-17T01:02:48.346555Z",
+  "status": "completed",
+  "task_success": false,
+  "termination_reason": "final_response",
+  "trace_path": ".squelch/studies/pilot-001/runs/pilot-001-r0038/events.jsonl",
+  "usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "input_tokens": 1575,
+    "output_tokens": 2929
+  }
+}

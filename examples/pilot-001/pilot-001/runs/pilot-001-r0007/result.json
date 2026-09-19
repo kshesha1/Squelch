@@ -1,0 +1,97 @@
+{
+  "artifact_hashes": {
+    "diff_patch": "sha256:3f95fe00ba5d672b2e73bd392524fd302f11b31f93766907410efa68777c5daf",
+    "evaluated_outputs": "sha256:84cd55e90680a76dc4e4cb6e42ceddd658a894286744c880b8f1916a19ab20a8",
+    "final_workspace": "sha256:84cd55e90680a76dc4e4cb6e42ceddd658a894286744c880b8f1916a19ab20a8",
+    "run_spec": "sha256:05309847ec7845b08f47b922fda64685ed0e5d8e196612584629984c21951bda"
+  },
+  "assertions": [
+    {
+      "assertion_id": "config-exists",
+      "detail": "",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "config-parses",
+      "detail": "",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "keys-exact",
+      "detail": "keys: ['debug', 'name', 'port']",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "name-valid",
+      "detail": "",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "port-valid",
+      "detail": "port: 3000",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "debug-valid",
+      "detail": "",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "no-unrelated-files",
+      "detail": "files present: ['README.txt', 'config.json']",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "readme-unchanged",
+      "detail": "",
+      "mandatory": true,
+      "passed": true
+    }
+  ],
+  "changed_files": [
+    "A config.json"
+  ],
+  "error": null,
+  "finished_at": "2026-09-16T22:33:49.015383Z",
+  "metrics": {},
+  "run_id": "pilot-001-r0007",
+  "schema_version": "1",
+  "spend_status": "free_local",
+  "spend_usd": 0.0,
+  "stage_results": [
+    {
+      "exposed_skill_ids": [],
+      "handoff_produced": false,
+      "model_calls": 2,
+      "schema_version": "1",
+      "stage_id": "implement",
+      "termination_reason": "final_response",
+      "tool_calls": 1,
+      "usage": {
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0,
+        "input_tokens": 856,
+        "output_tokens": 820
+      },
+      "worker_id": "worker-1"
+    }
+  ],
+  "started_at": "2026-09-16T22:33:03.613421Z",
+  "status": "completed",
+  "task_success": true,
+  "termination_reason": "final_response",
+  "trace_path": ".squelch/studies/pilot-001/runs/pilot-001-r0007/events.jsonl",
+  "usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "input_tokens": 856,
+    "output_tokens": 820
+  }
+}

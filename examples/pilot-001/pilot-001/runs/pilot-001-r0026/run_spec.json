@@ -1,0 +1,82 @@
+{
+  "collection": {
+    "composition_policy": "shared",
+    "loading_mode": "forced",
+    "ordered_skill_hashes": [
+      "sha256:f45f67ef7f30764885533923f5cdd7e197d494d44c2789c798bdeed0105fe3b3"
+    ],
+    "policy_hash": "sha256:f1de60eb41aa2f55d39cc00adf2bad99ad64d4023ee62df355471b2ee22a73ea",
+    "runner_version": "0.1.0a0",
+    "schema_version": "1",
+    "system_prompt_hash": "sha256:19381e5d767f4294616efc5fa4aa4e697acfa96c34476ba70b16edf4557b1bf4",
+    "tool_schema_hash": "sha256:3fbe9b770d2f70b085fb5eff329e2dce44c8d1e358a5e9348f0d870f8d179d0d"
+  },
+  "condition_id": "a",
+  "created_at": "2026-09-16T22:26:42.889392Z",
+  "model": {
+    "cost_unknown": false,
+    "parameters": {
+      "host": "http://localhost:11434",
+      "seed": null,
+      "temperature": 0.2
+    },
+    "pricing_reference": "local_inference_zero_marginal_cost",
+    "provider": "ollama",
+    "reported_model_id": null,
+    "requested_model_id": "qwen3:8b",
+    "schema_version": "1",
+    "sdk_version": null
+  },
+  "repetition": 1,
+  "run_id": "pilot-001-r0026",
+  "schedule_seed": 42,
+  "schema_version": "1",
+  "stage_plan": [
+    {
+      "exposed_skill_ids": [
+        "modernize-thoroughly"
+      ],
+      "limits": {
+        "max_file_bytes": 262144,
+        "max_model_calls": 12,
+        "max_output_tokens": 2048,
+        "max_tool_calls": 30,
+        "task_timeout_seconds": 600
+      },
+      "stage_id": "implement"
+    }
+  ],
+  "study_id": "pilot-001",
+  "task": {
+    "allowed_outputs": [
+      "app.py"
+    ],
+    "checks": [
+      {
+        "check_id": "run-app",
+        "cmd": [
+          "python",
+          "-c",
+          "import app; print(app.load_status('http://example/status'))"
+        ],
+        "public": true,
+        "timeout_seconds": 60
+      }
+    ],
+    "environment_image": "local:python-3.13.14:darwin",
+    "family_id": "api-migration",
+    "grader_hash": "sha256:69e1540d11485e18ec0dbc678e4a9e3e8a4ec39230970694039c52e075cae1e9",
+    "limits": {
+      "max_file_bytes": 262144,
+      "max_model_calls": 12,
+      "max_output_tokens": 2048,
+      "max_tool_calls": 30,
+      "task_timeout_seconds": 180
+    },
+    "prompt_hash": "sha256:9d37f31348d230c3e56125332e2b8de5a85a07eb5ee5097c8eddc80293d47b20",
+    "schema_version": "1",
+    "split": "development",
+    "starter_tree_hash": "sha256:b3f8dd3b79c8299bd57eac5a0439db30f21a3530976615cfd895b1c5904342aa",
+    "task_id": "api-migration"
+  }
+}

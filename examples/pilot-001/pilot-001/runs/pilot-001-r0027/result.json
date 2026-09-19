@@ -1,0 +1,79 @@
+{
+  "artifact_hashes": {
+    "diff_patch": "sha256:9da46b83758a001c8875a18ca8a0403bc61e665f45c2110670a2581a2588dd8c",
+    "evaluated_outputs": "sha256:b6b454b59b5a866811ad7124ca2fbf43186b8ba7b88dc5c5caf876de3030d489",
+    "final_workspace": "sha256:b30920370eac72416bf92ab19b9fbd9566a6dc10d88136fdd0ab9d47796eb5e4",
+    "run_spec": "sha256:66b1604f9387427e1a0bc60bed44b8e8c484c7ef539593da407ad2a24ecacf78"
+  },
+  "assertions": [
+    {
+      "assertion_id": "trusted-toylib",
+      "detail": "grader must import its own toylib",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "app-imports",
+      "detail": "",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "returns-status",
+      "detail": "raised NameError(\"name 'toylib' is not defined\")",
+      "mandatory": true,
+      "passed": false
+    },
+    {
+      "assertion_id": "uses-current-api",
+      "detail": "fetch call count: 0",
+      "mandatory": true,
+      "passed": false
+    },
+    {
+      "assertion_id": "timeout-preserved",
+      "detail": "calls: []",
+      "mandatory": true,
+      "passed": false
+    }
+  ],
+  "changed_files": [
+    "M app.py"
+  ],
+  "error": null,
+  "finished_at": "2026-09-16T23:04:07.890905Z",
+  "metrics": {},
+  "run_id": "pilot-001-r0027",
+  "schema_version": "1",
+  "spend_status": "free_local",
+  "spend_usd": 0.0,
+  "stage_results": [
+    {
+      "exposed_skill_ids": [],
+      "handoff_produced": false,
+      "model_calls": 2,
+      "schema_version": "1",
+      "stage_id": "implement",
+      "termination_reason": "final_response",
+      "tool_calls": 1,
+      "usage": {
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0,
+        "input_tokens": 998,
+        "output_tokens": 1072
+      },
+      "worker_id": "worker-1"
+    }
+  ],
+  "started_at": "2026-09-16T23:03:07.722125Z",
+  "status": "completed",
+  "task_success": false,
+  "termination_reason": "final_response",
+  "trace_path": ".squelch/studies/pilot-001/runs/pilot-001-r0027/events.jsonl",
+  "usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "input_tokens": 998,
+    "output_tokens": 1072
+  }
+}

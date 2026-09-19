@@ -1,0 +1,111 @@
+{
+  "artifact_hashes": {
+    "diff_patch": "sha256:be34c0909a4a33412c2e164ae80e555cc4e4865d6a33c2084bba4b781e455ba3",
+    "evaluated_outputs": "sha256:86919a727d71f26f9cc9dcb30e4dc2f49df9b7d9c5955263331459cd5897307a",
+    "final_workspace": "sha256:86919a727d71f26f9cc9dcb30e4dc2f49df9b7d9c5955263331459cd5897307a",
+    "run_spec": "sha256:1456b515ee13bdd3d8af98835c67ec21e2185ee52b6afaa819383555d72c237a"
+  },
+  "assertions": [
+    {
+      "assertion_id": "module-imports",
+      "detail": "",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "valid-basic",
+      "detail": "got [1, 2, 3]",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "valid-whitespace",
+      "detail": "got [4, 5]",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "valid-negative",
+      "detail": "got [-7]",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "none-input",
+      "detail": "got []",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "empty-string",
+      "detail": "got []",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "whitespace-only",
+      "detail": "got []",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "bad-tokens-skipped",
+      "detail": "got [1, 3]",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "all-bad-tokens",
+      "detail": "got []",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "only-parse-py",
+      "detail": "files: ['parse.py']",
+      "mandatory": true,
+      "passed": true
+    }
+  ],
+  "changed_files": [
+    "M parse.py"
+  ],
+  "error": null,
+  "finished_at": "2026-09-17T01:09:57.125189Z",
+  "metrics": {},
+  "run_id": "pilot-001-r0040",
+  "schema_version": "1",
+  "spend_status": "free_local",
+  "spend_usd": 0.0,
+  "stage_results": [
+    {
+      "exposed_skill_ids": [
+        "modernize-thoroughly"
+      ],
+      "handoff_produced": false,
+      "model_calls": 2,
+      "schema_version": "1",
+      "stage_id": "implement",
+      "termination_reason": "final_response",
+      "tool_calls": 1,
+      "usage": {
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0,
+        "input_tokens": 1540,
+        "output_tokens": 2193
+      },
+      "worker_id": "worker-1"
+    }
+  ],
+  "started_at": "2026-09-17T01:07:52.167905Z",
+  "status": "completed",
+  "task_success": true,
+  "termination_reason": "final_response",
+  "trace_path": ".squelch/studies/pilot-001/runs/pilot-001-r0040/events.jsonl",
+  "usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "input_tokens": 1540,
+    "output_tokens": 2193
+  }
+}

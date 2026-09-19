@@ -1,0 +1,82 @@
+{
+  "collection": {
+    "composition_policy": "shared",
+    "loading_mode": "forced",
+    "ordered_skill_hashes": [
+      "sha256:2add045104fa4c14bd2d1f214f64d246566e82158cb064c5d0bc67ef5dc9f202"
+    ],
+    "policy_hash": "sha256:f1de60eb41aa2f55d39cc00adf2bad99ad64d4023ee62df355471b2ee22a73ea",
+    "runner_version": "0.1.0a0",
+    "schema_version": "1",
+    "system_prompt_hash": "sha256:19381e5d767f4294616efc5fa4aa4e697acfa96c34476ba70b16edf4557b1bf4",
+    "tool_schema_hash": "sha256:3fbe9b770d2f70b085fb5eff329e2dce44c8d1e358a5e9348f0d870f8d179d0d"
+  },
+  "condition_id": "aa2",
+  "created_at": "2026-09-17T15:05:31.829179Z",
+  "model": {
+    "cost_unknown": false,
+    "parameters": {
+      "host": "http://localhost:11434",
+      "seed": null,
+      "temperature": 0.2
+    },
+    "pricing_reference": "local_inference_zero_marginal_cost",
+    "provider": "ollama",
+    "reported_model_id": null,
+    "requested_model_id": "qwen3:8b",
+    "schema_version": "1",
+    "sdk_version": null
+  },
+  "repetition": 2,
+  "run_id": "aa-001-r0004",
+  "schedule_seed": 99,
+  "schema_version": "1",
+  "stage_plan": [
+    {
+      "exposed_skill_ids": [
+        "minimal-change"
+      ],
+      "limits": {
+        "max_file_bytes": 262144,
+        "max_model_calls": 12,
+        "max_output_tokens": 2048,
+        "max_tool_calls": 30,
+        "task_timeout_seconds": 600
+      },
+      "stage_id": "implement"
+    }
+  ],
+  "study_id": "aa-001",
+  "task": {
+    "allowed_outputs": [
+      "ranges.py"
+    ],
+    "checks": [
+      {
+        "check_id": "smoke",
+        "cmd": [
+          "python",
+          "-c",
+          "import ranges; print(ranges.in_range(5, 1, 10))"
+        ],
+        "public": true,
+        "timeout_seconds": 60
+      }
+    ],
+    "environment_image": "local:python-3.13.14:darwin",
+    "family_id": "small-python-repair",
+    "grader_hash": "sha256:0226f86bc6887fc884d51681edf5658a6138d99ada617655c52d0bfb5dae2500",
+    "limits": {
+      "max_file_bytes": 262144,
+      "max_model_calls": 12,
+      "max_output_tokens": 2048,
+      "max_tool_calls": 30,
+      "task_timeout_seconds": 180
+    },
+    "prompt_hash": "sha256:5dc9e20c5803a2c57d1e319e92a33ed840049759295ee818775458cbff59505e",
+    "schema_version": "1",
+    "split": "development",
+    "starter_tree_hash": "sha256:216393e9ff90efd3f61ffd6612ac0c216ca15af13fca4bbac8c29ab6fe9d736b",
+    "task_id": "python-repair"
+  }
+}

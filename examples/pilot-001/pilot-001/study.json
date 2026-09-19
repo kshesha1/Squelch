@@ -1,0 +1,217 @@
+{
+  "backend": "ollama",
+  "campaign": "conflict-pilot",
+  "cells": [
+    {
+      "condition_id": "a",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0026",
+        "pilot-001-r0029",
+        "pilot-001-r0035"
+      ],
+      "successes": 3,
+      "task_id": "api-migration",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "ab",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0028",
+        "pilot-001-r0030",
+        "pilot-001-r0036"
+      ],
+      "successes": 3,
+      "task_id": "api-migration",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "b",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0025",
+        "pilot-001-r0032",
+        "pilot-001-r0034"
+      ],
+      "successes": 3,
+      "task_id": "api-migration",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "none",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0027",
+        "pilot-001-r0031",
+        "pilot-001-r0033"
+      ],
+      "successes": 1,
+      "task_id": "api-migration",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "a",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0002",
+        "pilot-001-r0008",
+        "pilot-001-r0009"
+      ],
+      "successes": 3,
+      "task_id": "json-config",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "ab",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0003",
+        "pilot-001-r0005",
+        "pilot-001-r0010"
+      ],
+      "successes": 3,
+      "task_id": "json-config",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "b",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0001",
+        "pilot-001-r0006",
+        "pilot-001-r0011"
+      ],
+      "successes": 2,
+      "task_id": "json-config",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "none",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0004",
+        "pilot-001-r0007",
+        "pilot-001-r0012"
+      ],
+      "successes": 3,
+      "task_id": "json-config",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "a",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0013",
+        "pilot-001-r0017",
+        "pilot-001-r0021"
+      ],
+      "successes": 2,
+      "task_id": "python-repair",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "ab",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0016",
+        "pilot-001-r0019",
+        "pilot-001-r0022"
+      ],
+      "successes": 3,
+      "task_id": "python-repair",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "b",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0014",
+        "pilot-001-r0018",
+        "pilot-001-r0023"
+      ],
+      "successes": 3,
+      "task_id": "python-repair",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "none",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0015",
+        "pilot-001-r0020",
+        "pilot-001-r0024"
+      ],
+      "successes": 3,
+      "task_id": "python-repair",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "a",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0040",
+        "pilot-001-r0042",
+        "pilot-001-r0047"
+      ],
+      "successes": 3,
+      "task_id": "robust-input",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "ab",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0038",
+        "pilot-001-r0043",
+        "pilot-001-r0045"
+      ],
+      "successes": 0,
+      "task_id": "robust-input",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "b",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0037",
+        "pilot-001-r0041",
+        "pilot-001-r0046"
+      ],
+      "successes": 3,
+      "task_id": "robust-input",
+      "valid_n": 3
+    },
+    {
+      "condition_id": "none",
+      "n": 3,
+      "runs": [
+        "pilot-001-r0039",
+        "pilot-001-r0044",
+        "pilot-001-r0048"
+      ],
+      "successes": 3,
+      "task_id": "robust-input",
+      "valid_n": 3
+    }
+  ],
+  "config_hash": "sha256:574738c4ff1dd5753c8be9a8b1ba4244b052932b0ecf94106125ccea90d6bbee",
+  "disclosure": "Screening evidence from local inference on the Squelch runner: descriptive effects, small N, no confirmation claim. Fixtures are authored controls; results describe this runner and model only.",
+  "environment": "local:python-3.13.14:darwin",
+  "evidence_stage": "screening",
+  "generated_at": "2026-09-17T01:25:02.762335+00:00",
+  "model_id": "qwen3:8b",
+  "preregistration_hash": "sha256:2069c94cfda3e0e965b176fb63872db847e42b9fd55f34d1cbe2bb03ad75b775",
+  "reused_runs": 0,
+  "runner_version": "0.1.0a0",
+  "schema_version": "1",
+  "spend_usd": 0.0,
+  "status_counts": {
+    "completed": 48
+  },
+  "total_runs": 48,
+  "usage_totals": {
+    "input_tokens": 81624,
+    "output_tokens": 78871
+  }
+}

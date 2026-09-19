@@ -87,13 +87,17 @@
     {
       "condition_id": "a",
       "max_output_tokens": 200,
-      "median_output_tokens": 200,
+      "mean_output_tokens_per_call": 50,
+      "median_model_calls": 3.5,
+      "median_output_tokens": 175,
       "n": 2,
       "truncated_runs": 0
     },
     {
       "condition_id": "ab",
       "max_output_tokens": 150,
+      "mean_output_tokens_per_call": 50,
+      "median_model_calls": 3.0,
       "median_output_tokens": 150,
       "n": 2,
       "truncated_runs": 0
@@ -101,6 +105,8 @@
     {
       "condition_id": "b",
       "max_output_tokens": 150,
+      "mean_output_tokens_per_call": 50,
+      "median_model_calls": 3.0,
       "median_output_tokens": 150,
       "n": 2,
       "truncated_runs": 0
@@ -108,6 +114,8 @@
     {
       "condition_id": "none",
       "max_output_tokens": 150,
+      "mean_output_tokens_per_call": 50,
+      "median_model_calls": 3.0,
       "median_output_tokens": 150,
       "n": 2,
       "truncated_runs": 0
@@ -132,7 +140,7 @@
       "skill_id": "modernize-thoroughly"
     }
   ],
-  "generated_at": "2026-09-17T14:38:39.711673+00:00",
+  "generated_at": "2026-09-19T04:39:47.419907+00:00",
   "model_id": null,
   "preregistration_hash": null,
   "reused_runs": 0,

@@ -1,3 +1,7 @@
+---
+sidebar_label: Phase 1 status
+---
+
 # Phase 1 implementation checklist
 
 Ticket IDs reference spec.md §6. Last updated 2026-09-17.
@@ -110,10 +114,10 @@ From pilot-001, 48 live runs on qwen3:8b, local inference:
 
 | Quantity | Value |
 |---|---|
-| Wall clock | ~61 s per run (~50 min for 48 runs) |
+| Wall clock | median 94 s, mean 223 s per run (~3 h for 48 runs; a healthier stretch of a later attempt averaged ~61 s) |
 | Input tokens | ~1,700 per run (81,624 total) |
 | Output tokens | ~1,640 per run (78,871 total) |
 | USD | $0.00 — local inference, no marginal cost |
 
-The binding constraint is wall clock, not money. A 48-run grid is about an
-hour; plan phase-scale campaigns accordingly.
+The binding constraint is wall clock, not money. A 48-run grid is hours, not
+minutes, and the spread is wide; plan phase-scale campaigns accordingly.

@@ -1,0 +1,81 @@
+{
+  "artifact_hashes": {
+    "diff_patch": "sha256:97d30159313e9c4c332759384bce9acb34c8caee0717f49d26bde01f91f092ac",
+    "evaluated_outputs": "sha256:f81e225c91076dc1c575cd5319ac492499e484f31017fc59d873a8923918c86b",
+    "final_workspace": "sha256:7571bc88273a9a0f25e882589a27e5f094940bbfab2f7dc5480e32a2304160cf",
+    "run_spec": "sha256:9534bed9eb64023ffa3358e7f2f5dc019f7325688f9b1eeaec7bf3fcb6a4415b"
+  },
+  "assertions": [
+    {
+      "assertion_id": "trusted-toylib",
+      "detail": "grader must import its own toylib",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "app-imports",
+      "detail": "",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "returns-status",
+      "detail": "returned 'ok'",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "uses-current-api",
+      "detail": "fetch call count: 1",
+      "mandatory": true,
+      "passed": true
+    },
+    {
+      "assertion_id": "timeout-preserved",
+      "detail": "calls: [{'url': 'http://example/status', 'timeout': 5}]",
+      "mandatory": true,
+      "passed": true
+    }
+  ],
+  "changed_files": [
+    "M app.py"
+  ],
+  "error": null,
+  "finished_at": "2026-09-17T15:23:24.472884Z",
+  "metrics": {},
+  "run_id": "aa-001-r0012",
+  "schema_version": "1",
+  "spend_status": "free_local",
+  "spend_usd": 0.0,
+  "stage_results": [
+    {
+      "exposed_skill_ids": [
+        "minimal-change"
+      ],
+      "handoff_produced": false,
+      "model_calls": 3,
+      "schema_version": "1",
+      "stage_id": "implement",
+      "termination_reason": "final_response",
+      "tool_calls": 2,
+      "usage": {
+        "cache_read_tokens": 0,
+        "cache_write_tokens": 0,
+        "input_tokens": 1962,
+        "output_tokens": 1187
+      },
+      "worker_id": "worker-1"
+    }
+  ],
+  "started_at": "2026-09-17T15:22:14.246125Z",
+  "status": "completed",
+  "task_success": true,
+  "termination_reason": "final_response",
+  "trace_path": ".squelch/studies/aa-001/runs/aa-001-r0012/events.jsonl",
+  "usage": {
+    "cache_read_tokens": 0,
+    "cache_write_tokens": 0,
+    "input_tokens": 1962,
+    "output_tokens": 1187
+  }
+}
