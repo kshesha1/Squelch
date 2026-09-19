@@ -127,5 +127,5 @@ minutes, and the spread is wide; plan phase-scale campaigns accordingly.
 
 - [x] Docusaurus site in `website/` presenting `docs/` (34 pages, mermaid
       diagrams, local search); the build fails on any broken link and passes in CI
-- [ ] GitHub Pages deployment: the workflow builds, but the deploy step needs
-      Pages enabled once (Settings > Pages > Source: GitHub Actions)
+- [ ] GitHub Pages deployment: Pages was enabled 2026-09-19; the first
+      successful deploy is pending confirmation
