@@ -4,7 +4,7 @@ sidebar_label: Phase 1 status
 
 # Phase 1 implementation checklist
 
-Ticket IDs reference spec.md §6. Last updated 2026-09-17.
+Ticket IDs reference spec.md §6. Last updated 2026-09-19.
 
 ## Recorded deviations from the spec
 
@@ -32,8 +32,9 @@ Ticket IDs reference spec.md §6. Last updated 2026-09-17.
 - [x] CI: lint + keyless tests + offline demo; Docker sandbox as a separate
       job with an explicit daemon precondition
 - [x] Apache-2.0; README stating what is and is not supported by measurement
-- [ ] Public repository — local git only; pushing needs separate
-      authorization (spec §14.10)
+- [x] Public repository: https://github.com/kshesha1/Squelch (pushed
+      2026-09-19 with the operator's explicit authorization, spec §14.10);
+      CI (keyless tests and the Docker sandbox job) passed on the first push
 - [ ] Confirm `squelch-skills` is free on PyPI before any release
 
 ## P1.2 Skill ingestion — DONE
@@ -51,7 +52,7 @@ Ticket IDs reference spec.md §6. Last updated 2026-09-17.
 - [x] DockerEnv implementing the §5.3 container contract, with boundary tests
       (network off, read-only root, read-only mount) in a Docker-marked job
 - [x] LocalEnv labeled non-isolating; its identity string marks every record
-- [x] Eight task fixtures across four families, including harder v2 variants
+- [x] Seven task fixtures across four families, including harder v2 variants
 - [x] Grader calibration tests: hidden reference solutions must pass, starters
       must not, graders must give partial signal (floor-effect guard)
 - [ ] Pin the task image by digest rather than the `python:3.12-slim` tag
@@ -121,3 +122,10 @@ From pilot-001, 48 live runs on qwen3:8b, local inference:
 
 The binding constraint is wall clock, not money. A 48-run grid is hours, not
 minutes, and the spread is wide; plan phase-scale campaigns accordingly.
+
+## Documentation site
+
+- [x] Docusaurus site in `website/` presenting `docs/` (34 pages, mermaid
+      diagrams, local search); the build fails on any broken link and passes in CI
+- [ ] GitHub Pages deployment: the workflow builds, but the deploy step needs
+      Pages enabled once (Settings > Pages > Source: GitHub Actions)

@@ -64,10 +64,6 @@ Only `shared` is implemented. Multi-stage policies are on the [roadmap](../roadm
 
 `pytest -m "not docker"` excludes them on purpose. `pytest -m docker` needs a running daemon and the `python:3.12-slim` image; with no daemon the tests are **skipped**, and a skip is never a pass.
 
-## A `docker`-marked test fails on Linux with a permission error
-
-The container runs as uid 1000 and needs to traverse the mounted temp directory. Check the directory's permissions and owner.
-
 ## Everything is fine but I don't trust a number
 
 Good. Open the failed runs ([reading results](./read-results.md#5-when-a-failure-looks-dramatic-open-the-failed-runs)), check status counts, and look at the diagnostics table.
