@@ -127,5 +127,6 @@ minutes, and the spread is wide; plan phase-scale campaigns accordingly.
 
 - [x] Docusaurus site in `website/` presenting `docs/` (34 pages, mermaid
       diagrams, local search); the build fails on any broken link and passes in CI
-- [ ] GitHub Pages deployment: Pages was enabled 2026-09-19; the first
-      successful deploy is pending confirmation
+- [x] GitHub Pages deployment: live at https://kshesha1.github.io/Squelch/
+      (first successful deploy 2026-09-19; all pages and assets verified
+      under the /Squelch/ base path)
