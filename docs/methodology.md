@@ -1,3 +1,7 @@
+---
+sidebar_label: Methodology
+---
+
 # Squelch methodology
 
 How this project turns "does a skill help?" into something measurable, and

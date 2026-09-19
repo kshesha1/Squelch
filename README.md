@@ -8,6 +8,12 @@ together. Squelch is an open-source experimental system that measures that
 interference and tests whether rearranging how instructions are applied
 suppresses it.
 
+[![CI](https://github.com/kshesha1/Squelch/actions/workflows/ci.yml/badge.svg)](https://github.com/kshesha1/Squelch/actions/workflows/ci.yml)
+[![Docs](https://github.com/kshesha1/Squelch/actions/workflows/docs.yml/badge.svg)](https://kshesha1.github.io/Squelch/)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+
+**Documentation: https://kshesha1.github.io/Squelch/**
+
 **Status: in progress. Phase 1 (instrumented laboratory) implemented.**
 
 ## What is supported by measurement, and what is not
@@ -119,9 +125,12 @@ masquerade as a passed sandbox test.
 
 ## Documentation
 
+The full documentation site is at **https://kshesha1.github.io/Squelch/**. It's built from the Markdown in [`docs/`](docs), so everything is readable here too.
+
 - [spec.md](spec.md) — the full specification
 - [docs/methodology.md](docs/methodology.md) — how claims are controlled
-- [docs/weekly/week-01.md](docs/weekly/week-01.md) — what was measured
+- [docs/results/pilot-001.md](docs/results/pilot-001.md) — the first live pilot: what was measured, and what failed
+- [docs/weekly/week-01.md](docs/weekly/week-01.md) — the week 1 report
 - [docs/decisions/](docs/decisions/) — implementation status and deviations
 
 ## License
