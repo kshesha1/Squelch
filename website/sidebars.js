@@ -68,6 +68,7 @@ const sidebars = {
         'results/pilot-001',
         'weekly/week-01',
         'decisions/phase-01-checklist',
+        'history-rewrite',
       ],
     },
     'roadmap',

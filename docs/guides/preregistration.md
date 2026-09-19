@@ -46,6 +46,10 @@ A complete worked example is the one that governed the first pilot: [`docs/prere
 
 Squelch records the file's hash, but it does **not** verify that the file was committed to git before the run. The discipline is yours: commit the preregistration first, then reference it from the campaign.
 
+## A note on commit hashes
+
+The pilot's preregistration names commit `3df7125`. The repository history was later rewritten to change the author identity, which changed commit hashes but not file contents or dates. See the [history rewrite note](../history-rewrite.md) for the mapping and how to verify it.
+
 ## Honest limits
 
 - The check is "file exists and is hashed", not "file was committed earlier".
